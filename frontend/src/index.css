@@ -1,0 +1,47 @@
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+@layer base {
+  body {
+    @apply bg-background text-white antialiased overflow-x-hidden selection:bg-neon-purple selection:text-white;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-midnight-blue/40 backdrop-blur-xl border border-white/5 shadow-[0_8px_32px_rgba(0,0,0,0.5)];
+  }
+  
+  .glass-card {
+    @apply bg-midnight-blue/40 backdrop-blur-xl border border-white/5 shadow-[0_8px_32px_rgba(0,0,0,0.5)] rounded-2xl p-6 transition-all duration-500 hover:border-electric-blue/30 hover:shadow-[0_8px_32px_rgba(0,229,255,0.15)] hover:-translate-y-2;
+  }
+  
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-electric-blue via-neon-purple to-cyan-glow animate-gradient-x;
+  }
+  
+  .btn-primary {
+    @apply relative px-8 py-3 rounded-full font-medium text-white bg-gradient-to-r from-royal-violet to-neon-purple hover:from-electric-blue hover:to-cyan-glow transition-all duration-500 overflow-hidden shadow-[0_0_20px_rgba(185,33,255,0.4)] hover:shadow-[0_0_30px_rgba(0,229,255,0.6)];
+  }
+}
+
+/* Lenis smooth scrolling base styles */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
