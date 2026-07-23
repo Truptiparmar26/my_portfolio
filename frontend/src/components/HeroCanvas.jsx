@@ -1,13 +1,13 @@
 import React, { useRef, useMemo, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Points, PointMaterial, Line } from '@react-three/drei';
-import * as random from 'maath/random/dist/maath-random.esm';
+import { inSphere } from 'maath/random';
 import * as THREE from 'three';
 
 const NeuralNetwork = (props) => {
   const ref = useRef();
   // Generate more particles but constrained in a sphere
-  const sphere = useMemo(() => random.inSphere(new Float32Array(500 * 3), { radius: 2 }), []);
+  const sphere = useMemo(() => inSphere(new Float32Array(500 * 3), { radius: 2 }), []);
   
   // Create connections (lines) between close particles to form a neural network
   const [lines, setLines] = useState([]);
