@@ -1,171 +1,353 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { FiMail, FiMapPin, FiPhone, FiGithub, FiLinkedin, FiTwitter, FiSend } from 'react-icons/fi';
-import Globe from 'react-globe.gl';
+import React, { useState, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import Tilt from 'react-parallax-tilt';
+import { FiMail, FiMapPin, FiBriefcase, FiClock, FiGithub, FiLinkedin, FiTwitter, FiInstagram, FiSend, FiCheck, FiArrowRight } from 'react-icons/fi';
+import clsx from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+// Helper for conditional tailwind classes
+export function cn(...inputs) {
+  return twMerge(clsx(inputs));
+}
+
+// Magnetic effect wrapper
+const Magnetic = ({ children, className }) => {
+  const ref = useRef(null);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  const handleMouse = (e) => {
+    const { clientX, clientY } = e;
+    const { height, width, left, top } = ref.current.getBoundingClientRect();
+    const middleX = clientX - (left + width / 2);
+    const middleY = clientY - (top + height / 2);
+    setPosition({ x: middleX * 0.2, y: middleY * 0.2 });
+  };
+
+  const reset = () => {
+    setPosition({ x: 0, y: 0 });
+  };
+
+  const { x, y } = position;
+  return (
+    <motion.div
+      className={cn("relative inline-block", className)}
+      ref={ref}
+      onMouseMove={handleMouse}
+      onMouseLeave={reset}
+      animate={{ x, y }}
+      transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+// Reusable floating label input
+const FloatingInput = ({ id, label, type = "text", value, onChange, isTextArea = false }) => {
+  const [isFocused, setIsFocused] = useState(false);
+  const isActive = isFocused || value.length > 0;
+
+  return (
+    <div className="relative group w-full">
+      <div 
+        className={cn(
+          "absolute inset-0 rounded-[18px] transition-all duration-500 blur-xl opacity-0 pointer-events-none",
+          isFocused && "opacity-20 bg-neon-purple"
+        )}
+      />
+      
+      {isTextArea ? (
+        <textarea
+          id={id}
+          value={value}
+          onChange={onChange}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          required
+          rows={5}
+          className={cn(
+            "w-full bg-white/[0.02] border border-white/[0.08] rounded-[18px] px-6 py-5 text-white outline-none transition-all duration-300 resize-none",
+            "hover:bg-white/[0.04] hover:border-white/[0.12]",
+            isFocused && "bg-white/[0.05] border-neon-purple/50 shadow-[0_0_0_1px_rgba(185,33,255,0.5)]"
+          )}
+        />
+      ) : (
+        <input
+          type={type}
+          id={id}
+          value={value}
+          onChange={onChange}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          required
+          className={cn(
+            "w-full h-[64px] bg-white/[0.02] border border-white/[0.08] rounded-[18px] px-6 text-white outline-none transition-all duration-300",
+            "hover:bg-white/[0.04] hover:border-white/[0.12]",
+            isFocused && "bg-white/[0.05] border-neon-purple/50 shadow-[0_0_0_1px_rgba(185,33,255,0.5)]"
+          )}
+        />
+      )}
+      
+      <label
+        htmlFor={id}
+        className={cn(
+          "absolute left-6 text-gray-400 transition-all duration-300 pointer-events-none font-medium",
+          isActive 
+            ? "-top-3 bg-background px-2 text-xs text-neon-purple" 
+            : "top-[20px] text-base group-hover:text-gray-300"
+        )}
+      >
+        {label}
+      </label>
+    </div>
+  );
+};
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const globeRef = useRef();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
-  useEffect(() => {
-    if (globeRef.current) {
-      // Auto-rotate
-      globeRef.current.controls().autoRotate = true;
-      globeRef.current.controls().autoRotateSpeed = 1;
-      globeRef.current.pointOfView({ lat: 37.7749, lng: -122.4194, altitude: 2 }, 4000);
-    }
-  }, []);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setIsSubmitted(true);
-    setTimeout(() => setIsSubmitted(false), 3000);
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  const markers = [
-    { lat: 37.7749, lng: -122.4194, size: 20, color: '#00E5FF' }, // SF
-    { lat: 40.7128, lng: -74.0060, size: 15, color: '#B921FF' },  // NY
-    { lat: 51.5074, lng: -0.1278, size: 15, color: '#00FFFF' },   // London
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitError('');
+    
+    try {
+      const response = await fetch('/api/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      
+      if (!response.ok) throw new Error('Failed to send message');
+      
+      setIsSubmitted(true);
+      setFormData({ name: '', email: '', subject: '', message: '' });
+      setTimeout(() => setIsSubmitted(false), 6000);
+    } catch (error) {
+      setSubmitError(error.message || 'Something went wrong');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const infoCards = [
+    { icon: <FiMail />, title: 'Email', value: 'truptiofficial.it@gmail.com', gradient: 'from-neon-purple to-royal-violet' },
+    { icon: <FiMapPin />, title: 'Location', value: 'Ahmedabad, India', gradient: 'from-electric-blue to-accent-blue' },
+    { icon: <FiBriefcase />, title: 'Freelance', value: 'Available for work', gradient: 'from-soft-gold to-yellow-600' },
+    { icon: <FiClock />, title: 'Response Time', value: 'Within 24 Hours', gradient: 'from-neon-purple to-electric-blue' },
+  ];
+
+  const socialLinks = [
+    { icon: <FiGithub />, href: '#' },
+    { icon: <FiLinkedin />, href: '#' },
+    { icon: <FiTwitter />, href: '#' },
+    { icon: <FiInstagram />, href: '#' },
   ];
 
   return (
-    <section className="relative py-32 px-4 bg-background z-10 overflow-hidden" id="contact">
-      {/* Background Decor */}
-      <div className="absolute left-1/2 bottom-0 -translate-x-1/2 w-full h-1/2 bg-gradient-to-t from-electric-blue/10 to-transparent -z-10 pointer-events-none"></div>
-
-      <div className="max-w-7xl w-full mx-auto">
+    <section 
+      className="relative w-full bg-background overflow-hidden py-[140px] px-6 lg:px-12 selection:bg-neon-purple/30" 
+      id="contact"
+    >
+      {/* Background Animated Gradient Blobs */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+        <motion.div 
+          animate={{ scale: [1, 1.2, 1], rotate: [0, 90, 0], opacity: [0.15, 0.25, 0.15] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          className="absolute -top-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-neon-purple/20 blur-[120px]"
+        />
+        <motion.div 
+          animate={{ scale: [1, 1.3, 1], rotate: [0, -90, 0], opacity: [0.1, 0.2, 0.1] }}
+          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+          className="absolute top-[40%] -right-[10%] w-[60%] h-[60%] rounded-full bg-electric-blue/20 blur-[150px]"
+        />
+        <motion.div 
+          animate={{ scale: [1, 1.1, 1], opacity: [0.1, 0.15, 0.1] }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute -bottom-[20%] left-[20%] w-[40%] h-[40%] rounded-full bg-cyan-glow/20 blur-[120px]"
+        />
         
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 30 }}
+        {/* Subtle Grid Overlay */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,#000_10%,transparent_100%)]" />
+      </div>
+
+      <div className="max-w-[1400px] mx-auto relative z-10">
+        
+        {/* Header Section */}
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col items-center justify-center text-center mb-24"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-electric-blue/20 mb-6">
-            <span className="w-2 h-2 rounded-full bg-electric-blue animate-ping"></span>
-            <span className="text-sm font-medium text-electric-blue uppercase tracking-wider">Get In Touch</span>
-          </div>
-          <h3 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter mb-4">
-            Let's Build the <span className="text-gradient">Future</span>
-          </h3>
+          <motion.div 
+            initial={{ scale: 0.8, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+            className="px-4 py-2 rounded-full border border-white/10 bg-white/[0.02] backdrop-blur-md mb-8 inline-flex items-center gap-2"
+          >
+            <span className="w-2 h-2 rounded-full bg-electric-blue animate-ping" />
+            <span className="text-xs font-semibold uppercase tracking-widest text-gray-300">Get in Touch</span>
+          </motion.div>
+          
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter mb-6">
+            Contact <span className="text-gradient">Information</span>
+          </h2>
+          <p className="text-lg md:text-xl text-gray-400 max-w-2xl font-medium">
+            Have a project in mind or just want to say hi? Drop a message and let's make it happen.
+          </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        {/* Main Content Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-12 lg:gap-20 items-start">
           
-          {/* Contact Form */}
+          {/* Form Side */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8 }}
-            className="glass-card p-8 md:p-10 rounded-[2.5rem] relative overflow-hidden"
+            transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            {/* Success Overlay */}
-            {isSubmitted && (
-              <motion.div 
-                className="absolute inset-0 bg-background/90 backdrop-blur-md z-20 flex flex-col items-center justify-center text-center"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-              >
-                <div className="w-20 h-20 rounded-full bg-electric-blue/20 flex items-center justify-center mb-6">
-                  <FiSend className="text-4xl text-electric-blue" />
-                </div>
-                <h4 className="text-3xl font-bold text-white mb-2">Message Sent!</h4>
-                <p className="text-gray-400">I will get back to you within 24 hours.</p>
-              </motion.div>
-            )}
+            <div className="relative p-1 rounded-[32px] bg-gradient-to-b from-white/10 to-transparent group hover:from-neon-purple/30 transition-all duration-700">
+              <div className="bg-background/90 backdrop-blur-[25px] p-8 md:p-10 rounded-[28px] border border-white/[0.05] relative overflow-hidden">
+                
+                {/* Form Ambient Glow */}
+                <div className="absolute top-0 right-0 w-64 h-64 bg-neon-purple/10 rounded-full blur-[80px] -z-10 group-hover:bg-electric-blue/20 transition-all duration-700 pointer-events-none" />
 
-            <form onSubmit={handleSubmit} className="flex flex-col gap-6 relative z-10">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="name" className="text-sm font-medium text-gray-400 ml-1">Name</label>
-                  <input type="text" id="name" className="bg-white/5 border border-white/10 rounded-2xl px-5 py-4 focus:outline-none focus:border-electric-blue focus:bg-white/10 transition-all text-white" placeholder="John Doe" required />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="email" className="text-sm font-medium text-gray-400 ml-1">Email</label>
-                  <input type="email" id="email" className="bg-white/5 border border-white/10 rounded-2xl px-5 py-4 focus:outline-none focus:border-electric-blue focus:bg-white/10 transition-all text-white" placeholder="john@example.com" required />
-                </div>
+                {submitError && (
+                  <div className="mb-8 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm flex items-center gap-3">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
+                    {submitError}
+                  </div>
+                )}
+
+                <form onSubmit={handleSubmit} className="flex flex-col gap-6 relative z-10">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <FloatingInput id="name" label="Full Name" value={formData.name} onChange={handleChange} />
+                    <FloatingInput id="email" label="Email Address" type="email" value={formData.email} onChange={handleChange} />
+                  </div>
+                  
+                  <FloatingInput id="subject" label="Subject" value={formData.subject} onChange={handleChange} />
+                  <FloatingInput id="message" label="Your Message" value={formData.message} onChange={handleChange} isTextArea />
+                  
+                  <div className="mt-4">
+                    <Magnetic>
+                      <button 
+                        type="submit" 
+                        disabled={isSubmitting || isSubmitted}
+                        className={cn(
+                          "relative w-full h-[64px] rounded-full overflow-hidden transition-all duration-300 font-semibold text-lg flex items-center justify-center gap-3",
+                          isSubmitting || isSubmitted ? "cursor-not-allowed" : "hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(139,92,246,0.3)]",
+                          isSubmitted ? "bg-emerald-500 text-white" : "bg-white text-black hover:bg-transparent hover:text-white"
+                        )}
+                      >
+                        {/* Gradient outline on hover when transparent */}
+                        {!isSubmitted && (
+                          <div className="absolute inset-0 rounded-full p-[2px] bg-gradient-to-r from-neon-purple via-electric-blue to-royal-violet opacity-0 hover:opacity-100 transition-opacity duration-300 -z-10">
+                            <div className="w-full h-full bg-background rounded-full" />
+                          </div>
+                        )}
+                        
+                        {/* Shimmer effect */}
+                        <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent group-hover:animate-[shimmer_1.5s_infinite] pointer-events-none" />
+
+                        <AnimatePresence mode="wait">
+                          {isSubmitting ? (
+                            <motion.span key="loading" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                              Sending...
+                            </motion.span>
+                          ) : isSubmitted ? (
+                            <motion.span key="success" initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }} className="flex items-center gap-2">
+                              Message Sent <FiCheck className="text-xl" />
+                            </motion.span>
+                          ) : (
+                            <motion.span key="default" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex items-center gap-2 group/btn z-10">
+                              Send Message 
+                              <FiArrowRight className="text-xl transition-transform duration-300 group-hover/btn:translate-x-1" />
+                            </motion.span>
+                          )}
+                        </AnimatePresence>
+                      </button>
+                    </Magnetic>
+                  </div>
+                </form>
               </div>
-              
-              <div className="flex flex-col gap-2">
-                <label htmlFor="subject" className="text-sm font-medium text-gray-400 ml-1">Subject</label>
-                <input type="text" id="subject" className="bg-white/5 border border-white/10 rounded-2xl px-5 py-4 focus:outline-none focus:border-electric-blue focus:bg-white/10 transition-all text-white" placeholder="Project Inquiry" required />
-              </div>
-              
-              <div className="flex flex-col gap-2">
-                <label htmlFor="message" className="text-sm font-medium text-gray-400 ml-1">Message</label>
-                <textarea id="message" rows="5" className="bg-white/5 border border-white/10 rounded-2xl px-5 py-4 focus:outline-none focus:border-electric-blue focus:bg-white/10 transition-all text-white resize-none" placeholder="Tell me about your project..." required></textarea>
-              </div>
-              
-              <button type="submit" className="btn-primary w-full py-4 text-lg flex items-center justify-center gap-2 mt-4">
-                Send Message <FiSend />
-              </button>
-            </form>
+            </div>
           </motion.div>
 
-          {/* Contact Info & Globe */}
+          {/* Info Side */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
+            initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex flex-col h-full"
+            transition={{ duration: 0.8, ease: "easeOut", staggerChildren: 0.1 }}
+            className="flex flex-col gap-6"
           >
-            <div className="grid grid-cols-2 gap-6 mb-10">
-              <div className="glass-card p-6 rounded-3xl flex flex-col items-start hover:border-electric-blue/30 transition-colors cursor-pointer group">
-                <div className="w-12 h-12 rounded-full bg-electric-blue/10 flex items-center justify-center text-electric-blue mb-4 group-hover:scale-110 transition-transform">
-                  <FiMail className="text-xl" />
-                </div>
-                <h5 className="text-gray-400 text-sm mb-1">Email Me</h5>
-                <a href="mailto:hello@example.com" className="text-white font-medium hover:text-electric-blue transition-colors">hello@example.com</a>
-              </div>
-              <div className="glass-card p-6 rounded-3xl flex flex-col items-start hover:border-neon-purple/30 transition-colors cursor-pointer group">
-                <div className="w-12 h-12 rounded-full bg-neon-purple/10 flex items-center justify-center text-neon-purple mb-4 group-hover:scale-110 transition-transform">
-                  <FiMapPin className="text-xl" />
-                </div>
-                <h5 className="text-gray-400 text-sm mb-1">Location</h5>
-                <span className="text-white font-medium">San Francisco, CA</span>
-              </div>
-            </div>
-            
-            {/* 3D Globe Wrapper */}
-            <div className="relative flex-grow h-[300px] md:h-[400px] rounded-3xl overflow-hidden glass border border-white/5 flex items-center justify-center cursor-move">
-              <div className="absolute inset-0 z-10 pointer-events-none shadow-[inset_0_0_50px_rgba(5,5,5,0.8)]"></div>
-              
-              <Globe
-                ref={globeRef}
-                height={400}
-                width={400}
-                backgroundColor="rgba(0,0,0,0)"
-                showAtmosphere={true}
-                atmosphereColor="#00E5FF"
-                atmosphereAltitude={0.25}
-                globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
-                bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
-                htmlElementsData={markers}
-                htmlElement={(d) => {
-                  const el = document.createElement('div');
-                  el.innerHTML = `<div style="width: ${d.size}px; height: ${d.size}px; background-color: ${d.color}; border-radius: 50%; box-shadow: 0 0 15px ${d.color}; animation: pulse 2s infinite;"></div>`;
-                  return el;
-                }}
-              />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {infoCards.map((card, idx) => (
+                <Tilt 
+                  key={idx}
+                  tiltMaxAngleX={10} 
+                  tiltMaxAngleY={10} 
+                  perspective={1000} 
+                  scale={1.02} 
+                  transitionSpeed={2000} 
+                  gyroscope={true}
+                >
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: idx * 0.1, duration: 0.5 }}
+                    className="group h-full p-6 rounded-3xl bg-white/[0.02] border border-white/[0.05] hover:border-white/[0.1] hover:bg-white/[0.04] transition-all duration-300 flex flex-col items-start gap-4 relative overflow-hidden"
+                  >
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-3xl -z-10 group-hover:bg-white/10 transition-all duration-500" />
+                    
+                    <div className={cn("w-14 h-14 rounded-2xl flex items-center justify-center text-2xl text-white shadow-[0_10px_20px_-10px_rgba(0,0,0,0.5),inset_0_2px_4px_rgba(255,255,255,0.2)] bg-gradient-to-br relative transform transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3", card.gradient)}>
+                      <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-white/20 to-transparent" />
+                      <div className="absolute inset-x-2 bottom-0 h-1/2 bg-black/20 rounded-b-2xl blur-sm" />
+                      <span className="relative z-10 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">{card.icon}</span>
+                    </div>
+                    
+                    <div>
+                      <p className="text-sm text-gray-400 font-medium mb-1">{card.title}</p>
+                      <p className="text-base text-gray-200 font-semibold">{card.value}</p>
+                    </div>
+                  </motion.div>
+                </Tilt>
+              ))}
             </div>
 
-            <div className="flex gap-4 mt-10 justify-center lg:justify-start">
-              <a href="#" className="w-12 h-12 rounded-full glass border border-white/10 flex items-center justify-center hover:bg-white/10 hover:border-white/30 transition-all text-gray-300 hover:text-white">
-                <FiGithub className="text-xl" />
-              </a>
-              <a href="#" className="w-12 h-12 rounded-full glass border border-white/10 flex items-center justify-center hover:bg-white/10 hover:border-white/30 transition-all text-gray-300 hover:text-white">
-                <FiLinkedin className="text-xl" />
-              </a>
-              <a href="#" className="w-12 h-12 rounded-full glass border border-white/10 flex items-center justify-center hover:bg-white/10 hover:border-white/30 transition-all text-gray-300 hover:text-white">
-                <FiTwitter className="text-xl" />
-              </a>
+            {/* Socials row */}
+            <div className="mt-8 p-8 rounded-3xl bg-gradient-to-br from-white/[0.05] to-transparent border border-white/[0.05] flex flex-col items-center justify-center gap-6">
+              <p className="text-gray-400 font-medium text-sm tracking-widest uppercase">Connect Elsewhere</p>
+              <div className="flex items-center gap-4 flex-wrap justify-center">
+                {socialLinks.map((social, idx) => (
+                  <Magnetic key={idx}>
+                    <a 
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-14 h-14 rounded-full bg-white/[0.03] border border-white/[0.08] flex items-center justify-center text-xl text-gray-300 hover:text-white hover:bg-white/[0.1] hover:border-white/[0.2] transition-all duration-300 relative group overflow-hidden shadow-[inset_0_2px_10px_rgba(255,255,255,0.05)]"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-br from-neon-purple/20 to-electric-blue/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <span className="relative z-10 group-hover:scale-110 transition-transform duration-300">
+                        {social.icon}
+                      </span>
+                    </a>
+                  </Magnetic>
+                ))}
+              </div>
             </div>
-
           </motion.div>
+
         </div>
       </div>
     </section>

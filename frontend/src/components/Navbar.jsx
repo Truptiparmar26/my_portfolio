@@ -61,9 +61,9 @@ const Navbar = () => {
               {link.name}
             </a>
           ))}
-          <MagneticButton className="btn-primary text-sm px-6 py-2">
+          {/* <MagneticButton className="btn-primary text-sm px-6 py-2">
             Hire Me
-          </MagneticButton>
+          </MagneticButton> */}
         </nav>
 
         {/* Mobile Menu Button */}
@@ -94,9 +94,9 @@ const Navbar = () => {
                   {link.name}
                 </a>
               ))}
-              <button className="btn-primary mt-4">
+              {/* <button className="btn-primary mt-4">
                 Hire Me
-              </button>
+              </button> */}
             </motion.div>
           )}
         </AnimatePresence>

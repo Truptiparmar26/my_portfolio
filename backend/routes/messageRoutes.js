@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.route('/')
   .get(messageController.getAll)
-  .post(protect, admin, messageController.createOne);
+  .post(messageController.createOne);
 
 router.route('/:id')
   .get(messageController.getOne)

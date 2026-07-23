@@ -5,27 +5,27 @@ import Tilt from 'react-parallax-tilt';
 const experiences = [
   {
     id: 1,
-    role: 'Senior AI/MERN Engineer',
-    company: 'Tech Innovators Inc.',
-    duration: '2023 - Present',
-    description: 'Spearheading the integration of Generative AI models into enterprise MERN applications. Architecting scalable, low-latency APIs and cinematic frontend experiences.',
-    skills: ['React', 'Node.js', 'OpenAI API', 'MongoDB']
+    role: 'B.Sc. Information Technology',
+    company: 'K S School of Business Management and Information Technology, Gujarat University',
+    duration: '2023 - 2026',
+    description: 'Built a strong foundation in software development, data structures, databases, web technologies, and problem-solving while actively working on practical projects.',
+    skills: ['Java', 'JavaScript', 'HTML', 'CSS', 'MySQL', 'Git']
   },
   {
     id: 2,
-    role: 'Full Stack Developer',
-    company: 'Creative Solutions',
-    duration: '2020 - 2023',
-    description: 'Developed and maintained high-performance client projects using the MERN stack. Led the migration to modern React patterns and implemented custom 3D web experiences.',
-    skills: ['React', 'Express', 'Three.js', 'Tailwind']
+    role: 'Full Stack MERN Developer',
+    company: 'Independent Projects & Freelance',
+    duration: '2025 - Present',
+    description: 'Developing responsive, scalable web applications using the MERN Stack. Building REST APIs, authentication systems, admin dashboards, and modern user interfaces while focusing on clean, maintainable code.',
+    skills: ['React', 'Node.js', 'Express.js', 'MongoDB', 'Tailwind CSS']
   },
   {
     id: 3,
-    role: 'Software Engineer Intern',
-    company: 'Startup Hub',
-    duration: '2019 - 2020',
-    description: 'Assisted in building RESTful APIs and building responsive user interfaces. Gained foundational knowledge in database optimization and deployment strategies.',
-    skills: ['JavaScript', 'HTML/CSS', 'Git', 'SQL']
+    role: 'AI/ML Enthusiast & Open to Opportunities',
+    company: 'Self-Taught & Exploration',
+    duration: '2026 - Present',
+    description: 'Exploring Artificial Intelligence, Machine Learning, and Generative AI while integrating AI-powered features into web applications. Continuously learning through hands-on projects and preparing for a software development career.',
+    skills: ['Python', 'AI/ML', 'OpenAI APIs', 'GitHub', 'REST APIs']
   }
 ];
 
