@@ -20,6 +20,8 @@ export default {
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
+        outfit: ['Outfit', 'sans-serif'],
+        space: ['Space Grotesk', 'sans-serif'],
       },
       animation: {
         'blob': 'blob 7s infinite',

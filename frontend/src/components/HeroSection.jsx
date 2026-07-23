@@ -7,7 +7,7 @@ import { FiDownload, FiArrowRight, FiGithub } from 'react-icons/fi';
 
 const HeroSection = () => {
   return (
-    <div className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+    <div id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       <HeroCanvas />
       
       <div className="max-w-7xl w-full mx-auto px-4 md:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center z-10">
@@ -35,7 +35,7 @@ const HeroSection = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            Hi, I'm Your Name
+            Hi, I'm Trupti Parmar
           </motion.h2>
 
           <motion.h1 

@@ -4,10 +4,11 @@ import { FiMenu, FiX } from 'react-icons/fi';
 import MagneticButton from './MagneticButton';
 
 const navLinks = [
-  { name: 'Home', href: '/' },
+  { name: 'Home', href: '#home' },
   { name: 'About', href: '#about' },
+  { name: 'Skills', href: '#skills' },
+  { name: 'Experience', href: '#experience' },
   { name: 'Projects', href: '#projects' },
-  { name: 'Services', href: '#services' },
   { name: 'Contact', href: '#contact' },
 ];
 
@@ -28,13 +29,24 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const handleNavClick = (e, href) => {
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+      setIsOpen(false);
+    }
+  };
+
   return (
     <header className={`fixed top-0 left-0 w-full z-40 transition-all duration-300 ${isScrolled ? 'py-4 glass' : 'py-6 bg-transparent'}`}>
       <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between">
         
         {/* Logo */}
-        <a href="/" className="text-2xl font-bold tracking-tighter text-white z-50">
-          <span className="text-gradient">3D</span>Portfolio
+        <a href="#home" onClick={(e) => handleNavClick(e, '#home')} className="text-2xl md:text-3xl font-outfit font-bold tracking-wide text-white z-50 flex items-center group">
+          Trupti<span className="text-gradient ml-1 opacity-90 group-hover:opacity-100 transition-opacity">.dev</span>
         </a>
 
         {/* Desktop Nav */}
@@ -43,6 +55,7 @@ const Navbar = () => {
             <a 
               key={link.name} 
               href={link.href}
+              onClick={(e) => handleNavClick(e, link.href)}
               className="text-sm font-medium text-gray-300 hover:text-white transition-colors"
             >
               {link.name}
@@ -75,8 +88,8 @@ const Navbar = () => {
                 <a 
                   key={link.name} 
                   href={link.href}
-                  onClick={() => setIsOpen(false)}
-                  className="text-2xl font-bold text-white hover:text-accent-blue transition-colors"
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className="text-2xl font-bold text-white hover:text-electric-blue transition-colors"
                 >
                   {link.name}
                 </a>
