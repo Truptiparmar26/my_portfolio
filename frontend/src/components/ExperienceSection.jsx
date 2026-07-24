@@ -51,10 +51,12 @@ const ExperienceSection = () => {
           transition={{ duration: 0.8 }}
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-electric-blue/20 mb-6">
-            <span className="text-sm font-medium text-electric-blue uppercase tracking-wider">Experience</span>
+            <span className="text-sm font-medium text-electric-blue uppercase tracking-wider">EDUCATION</span>
           </div>
+
+
           <h3 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter">
-            My <span className="text-gradient">Journey</span>
+            Academic <span className="text-gradient">Journey</span>
           </h3>
         </motion.div>
 

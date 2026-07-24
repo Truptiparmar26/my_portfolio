@@ -104,3 +104,5 @@
 // };
 
 // export default CertificatesSection;
+
+export default () => null;

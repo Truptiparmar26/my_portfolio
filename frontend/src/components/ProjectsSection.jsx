@@ -63,13 +63,13 @@ const ProjectsSection = () => {
       <div className="max-w-7xl mx-auto w-full relative z-10">
         
         <motion.div
-          className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8"
+          className="flex flex-col items-center justify-center text-center mb-16 gap-8"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8 }}
         >
-          <div>
+          <div className="flex flex-col items-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-electric-blue/20 mb-6">
               <span className="text-sm font-medium text-electric-blue uppercase tracking-wider">Portfolio</span>
             </div>
@@ -79,7 +79,7 @@ const ProjectsSection = () => {
           </div>
 
           {/* Filter Categories */}
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap justify-center gap-3">
             {categories.map((cat) => (
               <button
                 key={cat}
@@ -176,11 +176,7 @@ const ProjectsSection = () => {
           </AnimatePresence>
         </motion.div>
 
-        <div className="mt-16 flex justify-center">
-          <button className="px-8 py-4 rounded-full border border-white/10 glass hover:bg-white/5 transition-all text-white font-medium flex items-center gap-2">
-            View Full Archive <FiExternalLink />
-          </button>
-        </div>
+
 
       </div>
     </section>
