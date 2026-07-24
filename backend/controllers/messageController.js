@@ -19,19 +19,18 @@ Subject: ${req.body.subject}
 Message:
 ${req.body.message}`;
 
-      // Send email asynchronously in the background so it doesn't hang the UI
-      sendEmail({
+      // Await the email send so if it fails, it throws an error and goes to catch block
+      await sendEmail({
         email: process.env.EMAIL_USER,
         replyTo: req.body.email,
         subject: emailSubject,
         message: emailText,
-      }).catch(emailError => {
-        console.error('Background email failed to send:', emailError);
       });
 
       res.status(201).json(document);
     } catch (error) {
-      res.status(400).json({ message: error.message });
+      console.error('Email/Message creation error:', error);
+      res.status(500).json({ message: 'Failed to send message. Please try again later.', error: error.message });
     }
   },
 };
