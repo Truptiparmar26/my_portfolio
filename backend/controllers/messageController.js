@@ -22,7 +22,7 @@ ${req.body.message}`;
       // Await the email send so we can log errors, but don't fail the whole request if it fails
       try {
         await sendEmail({
-          email: process.env.EMAIL_USER,
+          email: 'truptiofficial.it@gmail.com',
           replyTo: req.body.email,
           subject: emailSubject,
           message: emailText,

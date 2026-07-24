@@ -2,21 +2,16 @@ import nodemailer from 'nodemailer';
 
 const sendEmail = async (options) => {
   const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false, // use STARTTLS instead of SSL
+    service: 'gmail',
     auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
+      user: 'truptiofficial.it@gmail.com',
+      pass: 'flylutqwlhwjumja',
     },
-    connectionTimeout: 10000, // 10 seconds timeout
-    greetingTimeout: 10000,
-    socketTimeout: 10000,
   });
 
   // Define the email options
   const mailOptions = {
-    from: `"Portfolio Contact" <${process.env.EMAIL_USER}>`,
+    from: `"Portfolio Contact" <truptiofficial.it@gmail.com>`,
     to: options.email,
     replyTo: options.replyTo,
     subject: options.subject,
