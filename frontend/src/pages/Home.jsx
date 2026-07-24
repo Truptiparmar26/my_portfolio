@@ -8,7 +8,7 @@ import ExperienceSection from '../components/ExperienceSection';
 import ProjectsSection from '../components/ProjectsSection';
 import ServicesSection from '../components/ServicesSection';
 import CertificatesSection from '../components/CertificatesSection';
-import TestimonialsSection from '../components/TestimonialsSection';
+import Testimonials from '../components/Testimonials';
 import ContactSection from '../components/ContactSection';
 
 const Home = () => {
@@ -22,7 +22,7 @@ const Home = () => {
       <ProjectsSection />
       <ServicesSection />
       <CertificatesSection />
-      <TestimonialsSection />
+      <Testimonials />
       <ContactSection />
     </main>
   );
