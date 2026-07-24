@@ -145,10 +145,9 @@ const ContactSection = () => {
   ];
 
   const socialLinks = [
-    { icon: <FiGithub />, href: '#' },
-    { icon: <FiLinkedin />, href: '#' },
-    { icon: <FiTwitter />, href: '#' },
-    { icon: <FiInstagram />, href: '#' },
+    { icon: <FiGithub />, href: 'https://github.com/Truptiparmar26' },
+    { icon: <FiLinkedin />, href: 'https://www.linkedin.com/in/trupti-parmar-46a5082a0' },
+    { icon: <FiMail />, href: 'mailto:truptiofficial.it@gmail.com' },
   ];
 
   return (
@@ -202,8 +201,7 @@ const ContactSection = () => {
             Contact <span className="text-gradient">Information</span>
           </h2>
           <p className="text-lg md:text-xl text-gray-400 max-w-2xl font-medium">
-            Have a project in mind or just want to say hi? Drop a message and let's make it happen.
-          </p>
+Ready to bring your vision to life? I'd love to hear about your next project.          </p>
         </motion.div>
 
         {/* Main Content Grid */}
@@ -326,23 +324,32 @@ const ContactSection = () => {
             </div>
 
             {/* Socials row */}
-            <div className="mt-8 p-8 rounded-3xl bg-gradient-to-br from-white/[0.05] to-transparent border border-white/[0.05] flex flex-col items-center justify-center gap-6">
+            <div className="mt-8 p-8 rounded-3xl bg-gradient-to-br from-white/[0.05] to-transparent border border-white/[0.05] flex flex-col items-center justify-center gap-6 relative z-50">
               <p className="text-gray-400 font-medium text-sm tracking-widest uppercase">Connect Elsewhere</p>
-              <div className="flex items-center gap-4 flex-wrap justify-center">
+              <div className="flex items-center gap-4 flex-wrap justify-center relative z-50">
                 {socialLinks.map((social, idx) => (
-                  <Magnetic key={idx}>
-                    <a 
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-14 h-14 rounded-full bg-white/[0.03] border border-white/[0.08] flex items-center justify-center text-xl text-gray-300 hover:text-white hover:bg-white/[0.1] hover:border-white/[0.2] transition-all duration-300 relative group overflow-hidden shadow-[inset_0_2px_10px_rgba(255,255,255,0.05)]"
-                    >
-                      <div className="absolute inset-0 bg-gradient-to-br from-neon-purple/20 to-electric-blue/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                      <span className="relative z-10 group-hover:scale-110 transition-transform duration-300">
-                        {social.icon}
-                      </span>
-                    </a>
-                  </Magnetic>
+                  <a 
+                    key={idx}
+                    href={social.href}
+                    target={social.href !== '#' ? "_blank" : undefined}
+                    rel={social.href !== '#' ? "noopener noreferrer" : undefined}
+                    onClick={(e) => {
+                      if (social.href !== '#') {
+                        e.preventDefault();
+                        if (social.href.startsWith('mailto:')) {
+                          window.location.href = social.href;
+                        } else {
+                          window.open(social.href, '_blank', 'noopener,noreferrer');
+                        }
+                      }
+                    }}
+                    className="w-14 h-14 rounded-full bg-white/[0.03] border border-white/[0.08] flex items-center justify-center text-xl text-gray-300 hover:text-white hover:bg-white/[0.1] hover:border-white/[0.2] transition-all duration-300 relative group overflow-hidden shadow-[inset_0_2px_10px_rgba(255,255,255,0.05)] cursor-pointer z-50"
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-br from-neon-purple/20 to-electric-blue/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                    <span className="relative z-10 group-hover:scale-110 transition-transform duration-300 pointer-events-none flex items-center justify-center w-full h-full">
+                      {social.icon}
+                    </span>
+                  </a>
                 ))}
               </div>
             </div>
@@ -350,6 +357,26 @@ const ContactSection = () => {
 
         </div>
       </div>
+
+      {/* Toast Notification */}
+      <AnimatePresence>
+        {isSubmitted && (
+          <motion.div
+            initial={{ opacity: 0, y: 50, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
+            className="fixed bottom-8 right-8 z-50 flex items-center gap-4 px-6 py-4 rounded-2xl bg-background/95 backdrop-blur-xl border border-emerald-500/30 shadow-[0_8px_32px_rgba(16,185,129,0.2)]"
+          >
+            <div className="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0">
+              <FiCheck className="text-xl" />
+            </div>
+            <div>
+              <h4 className="text-white font-semibold text-sm">Success</h4>
+              <p className="text-sm text-gray-400">Message sent successfully!</p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };

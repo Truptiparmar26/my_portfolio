@@ -15,30 +15,30 @@ const aiTopics = [
     description: 'Building and training deep neural networks for advanced pattern recognition.',
     tools: ['TensorFlow', 'PyTorch', 'Keras']
   },
-  {
-    title: 'Computer Vision',
-    icon: '👁️',
-    description: 'Processing and analyzing visual data for object detection and image segmentation.',
-    tools: ['OpenCV', 'YOLO', 'MediaPipe']
-  },
-  {
-    title: 'Generative AI',
-    icon: '✨',
-    description: 'Creating novel content, images, and text using state-of-the-art generative models.',
-    tools: ['Stable Diffusion', 'Midjourney', 'DALL-E']
-  },
+  // {
+  //   title: 'Computer Vision',
+  //   icon: '👁️',
+  //   description: 'Processing and analyzing visual data for object detection and image segmentation.',
+  //   tools: ['OpenCV', 'YOLO', 'MediaPipe']
+  // },
+  // {
+  //   title: 'Generative AI',
+  //   icon: '✨',
+  //   description: 'Creating novel content, images, and text using state-of-the-art generative models.',
+  //   tools: ['Stable Diffusion', 'Midjourney', 'DALL-E']
+  // },
   {
     title: 'Large Language Models',
     icon: '💬',
     description: 'Integrating and fine-tuning LLMs to build intelligent conversational agents.',
     tools: ['OpenAI API', 'LangChain', 'Hugging Face']
   },
-  {
-    title: 'Data Engineering',
-    icon: '📊',
-    description: 'Designing robust data pipelines for scalable AI model training and deployment.',
-    tools: ['Python', 'SQL', 'Apache Spark']
-  }
+  // {
+  //   title: 'Data Engineering',
+  //   icon: '📊',
+  //   description: 'Designing robust data pipelines for scalable AI model training and deployment.',
+  //   tools: ['Python', 'SQL', 'Apache Spark']
+  // }
 ];
 
 const AISection = () => {

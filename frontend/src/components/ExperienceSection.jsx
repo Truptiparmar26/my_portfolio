@@ -9,7 +9,7 @@ const experiences = [
     company: 'K S School of Business Management and Information Technology, Gujarat University',
     duration: '2023 - 2026',
     description: 'Built a strong foundation in software development, data structures, databases, web technologies, and problem-solving while actively working on practical projects.',
-    skills: ['Java', 'JavaScript', 'HTML', 'CSS', 'MySQL', 'Git']
+    skills: ['c','Java', 'JavaScript', 'HTML', 'CSS', 'MySQL', 'Git']
   },
   {
     id: 2,

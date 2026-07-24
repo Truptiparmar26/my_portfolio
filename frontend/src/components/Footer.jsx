@@ -41,19 +41,18 @@ const Footer = () => {
           <div className="col-span-1 md:col-span-4">
             <h5 className="text-lg font-semibold text-white mb-6">Let's Connect</h5>
             <p className="text-sm text-gray-400 mb-4">
-              Feel free to reach out for collaborations or just a friendly chat.
-            </p>
+Have a project, collaboration, or opportunity in mind? I'd love to hear from you. Let's create something amazing together.            </p>
             <div className="flex gap-4">
-              <a href="#" className="w-10 h-10 rounded-full glass border border-white/10 flex items-center justify-center hover:bg-white/10 hover:text-electric-blue hover:-translate-y-1 transition-all text-gray-300 shadow-lg hover:shadow-[0_0_15px_rgba(0,229,255,0.3)]">
+              <a href="https://github.com/Truptiparmar26" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full glass border border-white/10 flex items-center justify-center hover:bg-white/10 hover:text-electric-blue hover:-translate-y-1 transition-all text-gray-300 shadow-lg hover:shadow-[0_0_15px_rgba(0,229,255,0.3)]">
                 <FiGithub />
               </a>
-              <a href="#" className="w-10 h-10 rounded-full glass border border-white/10 flex items-center justify-center hover:bg-white/10 hover:text-electric-blue hover:-translate-y-1 transition-all text-gray-300 shadow-lg hover:shadow-[0_0_15px_rgba(0,229,255,0.3)]">
+              <a href="https://www.linkedin.com/in/trupti-parmar-46a5082a0" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full glass border border-white/10 flex items-center justify-center hover:bg-white/10 hover:text-electric-blue hover:-translate-y-1 transition-all text-gray-300 shadow-lg hover:shadow-[0_0_15px_rgba(0,229,255,0.3)]">
                 <FiLinkedin />
               </a>
-              <a href="#" className="w-10 h-10 rounded-full glass border border-white/10 flex items-center justify-center hover:bg-white/10 hover:text-electric-blue hover:-translate-y-1 transition-all text-gray-300 shadow-lg hover:shadow-[0_0_15px_rgba(0,229,255,0.3)]">
+              {/* <a href="#" className="w-10 h-10 rounded-full glass border border-white/10 flex items-center justify-center hover:bg-white/10 hover:text-electric-blue hover:-translate-y-1 transition-all text-gray-300 shadow-lg hover:shadow-[0_0_15px_rgba(0,229,255,0.3)]">
                 <FiTwitter />
-              </a>
-              <a href="mailto:hello@example.com" className="w-10 h-10 rounded-full glass border border-white/10 flex items-center justify-center hover:bg-white/10 hover:text-electric-blue hover:-translate-y-1 transition-all text-gray-300 shadow-lg hover:shadow-[0_0_15px_rgba(0,229,255,0.3)]">
+              </a> */}
+              <a href="mailto:truptiofficial.it@gmail.com" className="w-10 h-10 rounded-full glass border border-white/10 flex items-center justify-center hover:bg-white/10 hover:text-electric-blue hover:-translate-y-1 transition-all text-gray-300 shadow-lg hover:shadow-[0_0_15px_rgba(0,229,255,0.3)]">
                 <FiMail />
               </a>
             </div>

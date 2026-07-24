@@ -76,7 +76,10 @@ const HeroSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 1 }}
           >
-            <MagneticButton className="btn-primary flex items-center gap-2">
+            <MagneticButton 
+              onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+              className="btn-primary flex items-center gap-2"
+            >
               Explore Projects <FiArrowRight />
             </MagneticButton>
             
@@ -84,7 +87,10 @@ const HeroSection = () => {
               Download Resume <FiDownload />
             </MagneticButton>
 
-            <MagneticButton className="w-12 h-12 rounded-full border border-white/10 glass flex items-center justify-center hover:border-neon-purple/50 hover:bg-white/5 transition-all text-white hover:text-neon-purple">
+            <MagneticButton 
+              onClick={() => window.open('https://github.com/Truptiparmar26', '_blank')}
+              className="w-12 h-12 rounded-full border border-white/10 glass flex items-center justify-center hover:border-neon-purple/50 hover:bg-white/5 transition-all text-white hover:text-neon-purple"
+            >
               <FiGithub className="text-xl" />
             </MagneticButton>
           </motion.div>

@@ -6,47 +6,47 @@ import Tilt from 'react-parallax-tilt';
 const projects = [
   {
     id: 1,
-    title: 'AI Enterprise Architecture',
-    category: 'AI',
-    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&auto=format&fit=crop',
-    description: 'An AI-driven enterprise dashboard integrating LLMs for automated data analysis and predictive modeling. Built with scalable microservices.',
-    technologies: ['React', 'Node.js', 'OpenAI API', 'MongoDB'],
+    title: 'Taskora - Workflow Management',
+    category: 'MERN',
+    image: '/taskora.png',
+    description: 'The all-in-one platform to manage your tasks, notes, and daily workflow seamlessly. Features a modern, intuitive interface with secure user authentication.',
+    technologies: ['React', 'Node.js', 'Express', 'MongoDB'],
     githubUrl: '#',
     liveUrl: '#',
   },
   {
     id: 2,
-    title: 'MERN E-Commerce Ecosystem',
+    title: 'PlaceHub - Campus Recruitment Platform',
     category: 'MERN',
-    image: 'https://images.unsplash.com/photo-1557821552-17105176677c?w=800&auto=format&fit=crop',
-    description: 'A comprehensive e-commerce platform with a fully-featured admin panel, advanced filtering, JWT authentication, and real-time inventory management.',
-    technologies: ['Next.js', 'Express', 'MongoDB', 'Redux'],
+    image: '/placehub.jpg',
+    description: 'A unified ecosystem empowering students, companies, and placement cells to connect, collaborate, and cultivate future success stories.',
+    technologies: ['React', 'Node.js', 'Express', 'MongoDB'],
     githubUrl: '#',
     liveUrl: '#',
   },
   {
     id: 3,
-    title: 'Neural Vision Processor',
+    title: 'OncoDetect - Breast Cancer Prediction',
     category: 'Machine Learning',
-    image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&auto=format&fit=crop',
-    description: 'Real-time computer vision application capable of tracking objects and analyzing spatial data using customized YOLOv8 models deployed on the edge.',
-    technologies: ['Python', 'OpenCV', 'TensorFlow', 'FastAPI'],
-    githubUrl: '#',
-    liveUrl: '#',
+    image: '/oncodetect.png',
+    description: 'Advanced AI Breast Cancer Prediction. Leveraging Machine Learning algorithms to assist in early diagnosis with fast, accurate, and secure cell analysis.',
+    technologies: ['Python', 'Machine Learning', 'Scikit-Learn'],
+    githubUrl: '#'
+    // liveUrl: '#',
   },
   {
     id: 4,
-    title: 'FinTech Analytics Dashboard',
+    title: 'Om Shanti Travels',
     category: 'Full Stack',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop',
-    description: 'A robust financial dashboard visualizing massive datasets with sub-second latency, integrating WebSocket feeds for live market updates.',
-    technologies: ['React', 'TypeScript', 'Node.js', 'PostgreSQL'],
+    image: '/omshanti.png',   
+    description: 'A premium car rental platform for city tours, airport transfers, and outstation trips. Built with a modern UI and a seamless booking experience.',
+    technologies: ['PHP', 'Laravel', 'MySQL', 'Git'],
     githubUrl: '#',
-    liveUrl: '#',
+    liveUrl: 'https://car-rental-website-1-mnnp.onrender.com/',
   }
 ];
 
-const categories = ['All', 'MERN', 'AI', 'Machine Learning', 'Full Stack'];
+const categories = ['All', 'MERN', 'Machine Learning', 'Full Stack'];
 
 const ProjectsSection = () => {
   const [filter, setFilter] = useState('All');
@@ -119,17 +119,17 @@ const ProjectsSection = () => {
                   <div className="glass-card p-4 rounded-[2rem] h-full flex flex-col group overflow-hidden border border-white/5 hover:border-electric-blue/30 transition-colors duration-500">
                     
                     {/* Image Container with Video Play Icon Overlay */}
-                    <div className="relative h-64 md:h-80 w-full rounded-3xl overflow-hidden mb-6">
+                    <div className="relative h-64 md:h-80 w-full rounded-3xl overflow-hidden mb-6 bg-black/40">
                       <div className="absolute inset-0 bg-midnight-blue/20 mix-blend-overlay z-10 group-hover:opacity-0 transition-opacity duration-500"></div>
                       <img 
                         src={project.image} 
                         alt={project.title} 
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-110"
                       />
                       
                       {/* Video Play Overlay */}
-                      <div className="absolute inset-0 bg-background/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20 backdrop-blur-sm">
-                        <div className="w-16 h-16 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white backdrop-blur-md transform scale-50 group-hover:scale-100 transition-transform duration-500 delay-100">
+                      <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20">
+                        <div className="w-16 h-16 rounded-full bg-white/20 border border-white/30 flex items-center justify-center text-white backdrop-blur-md transform scale-50 group-hover:scale-100 transition-transform duration-500 delay-100 shadow-xl">
                           <FiPlayCircle className="text-3xl" />
                         </div>
                       </div>
@@ -158,12 +158,15 @@ const ProjectsSection = () => {
                       
                       {/* Links */}
                       <div className="flex gap-4 mt-auto pt-6 border-t border-white/5">
-                        <a href={project.liveUrl} target="_blank" rel="noreferrer" className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-white font-medium transition-colors text-sm">
-                          Live Demo <FiExternalLink />
-                        </a>
-                        <a href={project.githubUrl} target="_blank" rel="noreferrer" className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl border border-white/10 hover:border-white/30 text-gray-300 hover:text-white font-medium transition-colors text-sm">
-                          Source Code <FiGithub />
-                        </a>
+                        {project.liveUrl && project.liveUrl !== '#' ? (
+                          <a href={project.liveUrl} target="_blank" rel="noreferrer" className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-white font-medium transition-colors text-sm">
+                            Live Demo <FiExternalLink />
+                          </a>
+                        ) : (
+                          <a href={project.githubUrl || '#'} target="_blank" rel="noreferrer" className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl border border-white/10 hover:border-white/30 text-gray-300 hover:text-white font-medium transition-colors text-sm">
+                            Source Code <FiGithub />
+                          </a>
+                        )}
                       </div>
                     </div>
                   </div>
