@@ -19,13 +19,18 @@ Subject: ${req.body.subject}
 Message:
 ${req.body.message}`;
 
-      // Await the email send so if it fails, it throws an error and goes to catch block
-      await sendEmail({
-        email: process.env.EMAIL_USER,
-        replyTo: req.body.email,
-        subject: emailSubject,
-        message: emailText,
-      });
+      // Await the email send so we can log errors, but don't fail the whole request if it fails
+      try {
+        await sendEmail({
+          email: process.env.EMAIL_USER,
+          replyTo: req.body.email,
+          subject: emailSubject,
+          message: emailText,
+        });
+      } catch (emailError) {
+        console.error('Failed to send email notification:', emailError.message);
+        // We do NOT throw here because we still want to return 201 so the user's message is saved.
+      }
 
       res.status(201).json(document);
     } catch (error) {
