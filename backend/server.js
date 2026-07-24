@@ -14,10 +14,10 @@ import certificateRoutes from './routes/certificateRoutes.js';
 import serviceRoutes from './routes/serviceRoutes.js';
 import testimonialRoutes from './routes/testimonialRoutes.js';
 import messageRoutes from './routes/messageRoutes.js';
-import socialLinkRoutes from './routes/socialLinkRoutes.js';
+import socialLinkRoutes from './routes/sociallinkRoutes.js';
 import profileRoutes from './routes/profileRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
-import aiProjectRoutes from './routes/aiProjectRoutes.js';
+import aiProjectRoutes from './routes/aiprojectRoutes.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 
 // Load env vars
