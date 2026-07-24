@@ -19,17 +19,15 @@ Subject: ${req.body.subject}
 Message:
 ${req.body.message}`;
 
-      try {
-        await sendEmail({
-          email: process.env.EMAIL_USER, // sending it to your own email
-          replyTo: req.body.email,       // so hitting 'reply' sends it back to the user
-          subject: emailSubject,
-          message: emailText,
-        });
-      } catch (emailError) {
-        console.error('Error sending email:', emailError);
-        // We still return 201 because the message was saved in DB
-      }
+      // Send email asynchronously in the background so it doesn't hang the UI
+      sendEmail({
+        email: process.env.EMAIL_USER,
+        replyTo: req.body.email,
+        subject: emailSubject,
+        message: emailText,
+      }).catch(emailError => {
+        console.error('Background email failed to send:', emailError);
+      });
 
       res.status(201).json(document);
     } catch (error) {
