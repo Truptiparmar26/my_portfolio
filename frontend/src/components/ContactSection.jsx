@@ -120,6 +120,24 @@ const ContactSection = () => {
     setSubmitError('');
     
     try {
+      // 1. Send email directly from the browser via Web3Forms to bypass server blocking
+      await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          access_key: '48a61441-0889-4040-b894-e64647d0cdba',
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+          from_name: "Portfolio Website"
+        })
+      });
+
+      // 2. Save message to database
       await apiClient.post('/messages', formData);
       
       setIsSubmitted(true);

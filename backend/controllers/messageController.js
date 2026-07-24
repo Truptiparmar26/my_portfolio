@@ -19,18 +19,9 @@ Subject: ${req.body.subject}
 Message:
 ${req.body.message}`;
 
-      // Await the email send so we can log errors, but don't fail the whole request if it fails
-      try {
-        await sendEmail({
-          email: 'truptiofficial.it@gmail.com',
-          replyTo: req.body.email,
-          subject: emailSubject,
-          message: emailText,
-        });
-      } catch (emailError) {
-        console.error('Failed to send email notification:', emailError.message);
-        // We do NOT throw here because we still want to return 201 so the user's message is saved.
-      }
+      // Email sending is now handled securely by the frontend directly via Web3Forms
+      // This bypasses Render's outbound SMTP blocking and Cloudflare's backend blocking
+
 
       res.status(201).json(document);
     } catch (error) {
