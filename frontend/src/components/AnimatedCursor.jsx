@@ -2,16 +2,30 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
 const AnimatedCursor = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [mousePosition, setMousePosition] = useState({ x: -100, y: -100 });
   const [isHovering, setIsHovering] = useState(false);
 
   useEffect(() => {
+    // Hide default cursor globally
+    document.body.style.cursor = 'none';
+    const style = document.createElement('style');
+    style.innerHTML = `
+      * { cursor: none !important; }
+    `;
+    document.head.appendChild(style);
+
     const updateMousePosition = (e) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
 
     const handleMouseOver = (e) => {
-      if (e.target.tagName.toLowerCase() === 'button' || e.target.tagName.toLowerCase() === 'a') {
+      const target = e.target;
+      if (
+        target.tagName.toLowerCase() === 'button' || 
+        target.tagName.toLowerCase() === 'a' || 
+        target.closest('button') || 
+        target.closest('a')
+      ) {
         setIsHovering(true);
       } else {
         setIsHovering(false);
@@ -24,6 +38,8 @@ const AnimatedCursor = () => {
     return () => {
       window.removeEventListener('mousemove', updateMousePosition);
       window.removeEventListener('mouseover', handleMouseOver);
+      document.body.style.cursor = 'auto';
+      document.head.removeChild(style);
     };
   }, []);
 
@@ -45,6 +61,8 @@ const AnimatedCursor = () => {
     },
   };
 
+  if (typeof window !== 'undefined' && window.innerWidth < 768) return null;
+
   return (
     <>
       {/* Outer Circle */}
@@ -53,13 +71,13 @@ const AnimatedCursor = () => {
         variants={variants}
         animate={isHovering ? 'hover' : 'default'}
       />
-      {/* Inner Dot */}
+      {/* Inner Dot - tracks instantly */}
       <motion.div
-        className="fixed top-0 left-0 w-2 h-2 bg-white rounded-full pointer-events-none z-50 mix-blend-difference hidden md:block"
+        className="fixed top-0 left-0 w-2 h-2 bg-white rounded-full pointer-events-none z-[60] mix-blend-difference hidden md:block"
         animate={{
           x: mousePosition.x - 4,
           y: mousePosition.y - 4,
-          transition: { type: 'spring', mass: 0.05, stiffness: 1000, damping: 50 }
+          transition: { type: 'tween', duration: 0 } // Instant tracking
         }}
       />
     </>

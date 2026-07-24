@@ -6,17 +6,17 @@ import * as THREE from 'three';
 
 const NeuralNetwork = (props) => {
   const ref = useRef();
-  // Generate more particles but constrained in a sphere
-  const sphere = useMemo(() => inSphere(new Float32Array(500 * 3), { radius: 2 }), []);
+  // Generate fewer particles for a cleaner look
+  const sphere = useMemo(() => inSphere(new Float32Array(200 * 3), { radius: 2 }), []);
   
   // Create connections (lines) between close particles to form a neural network
   const [lines, setLines] = useState([]);
   
   useMemo(() => {
     const tempLines = [];
-    // Only check a subset of particles for performance
-    for (let i = 0; i < 150; i++) {
-      for (let j = i + 1; j < 150; j++) {
+    // Check a subset of particles for connections
+    for (let i = 0; i < 100; i++) {
+      for (let j = i + 1; j < 100; j++) {
         const x1 = sphere[i * 3];
         const y1 = sphere[i * 3 + 1];
         const z1 = sphere[i * 3 + 2];

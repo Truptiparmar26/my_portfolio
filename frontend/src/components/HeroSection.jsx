@@ -98,7 +98,7 @@ const HeroSection = () => {
 
         {/* Right Side: 3D Hologram / Brain Placeholder */}
         <motion.div 
-          className="relative h-[400px] lg:h-[600px] w-full flex items-center justify-center"
+          className="hidden lg:flex relative h-[400px] lg:h-[600px] w-full items-center justify-center"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.5, delay: 0.5, ease: "easeOut" }}
