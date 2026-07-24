@@ -4,6 +4,7 @@ import Tilt from 'react-parallax-tilt';
 import { FiMail, FiMapPin, FiBriefcase, FiClock, FiGithub, FiLinkedin, FiTwitter, FiInstagram, FiSend, FiCheck, FiArrowRight } from 'react-icons/fi';
 import clsx from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import apiClient from '../services/apiClient';
 
 // Helper for conditional tailwind classes
 export function cn(...inputs) {
@@ -119,19 +120,13 @@ const ContactSection = () => {
     setSubmitError('');
     
     try {
-      const response = await fetch('/api/messages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      });
-      
-      if (!response.ok) throw new Error('Failed to send message');
+      await apiClient.post('/messages', formData);
       
       setIsSubmitted(true);
       setFormData({ name: '', email: '', subject: '', message: '' });
       setTimeout(() => setIsSubmitted(false), 6000);
     } catch (error) {
-      setSubmitError(error.message || 'Something went wrong');
+      setSubmitError(error.response?.data?.message || error.message || 'Something went wrong');
     } finally {
       setIsSubmitting(false);
     }
@@ -289,12 +284,12 @@ Ready to bring your vision to life? I'd love to hear about your next project.   
             transition={{ duration: 0.8, ease: "easeOut", staggerChildren: 0.1 }}
             className="flex flex-col gap-6"
           >
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 gap-3 sm:gap-6">
               {infoCards.map((card, idx) => (
                 <Tilt 
                   key={idx}
-                  tiltMaxAngleX={10} 
-                  tiltMaxAngleY={10} 
+                  tiltMaxAngleX={5} 
+                  tiltMaxAngleY={5} 
                   perspective={1000} 
                   scale={1.02} 
                   transitionSpeed={2000} 
@@ -304,19 +299,18 @@ Ready to bring your vision to life? I'd love to hear about your next project.   
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ delay: idx * 0.1, duration: 0.5 }}
-                    className="group h-full p-6 rounded-3xl bg-white/[0.02] border border-white/[0.05] hover:border-white/[0.1] hover:bg-white/[0.04] transition-all duration-300 flex flex-col items-start gap-4 relative overflow-hidden"
+                    className="group h-full p-4 sm:p-6 rounded-[20px] sm:rounded-3xl bg-white/[0.02] border border-white/[0.08] hover:border-white/[0.15] hover:bg-white/[0.04] transition-all duration-300 flex flex-col justify-between items-start gap-4 relative overflow-hidden backdrop-blur-md shadow-lg"
                   >
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-3xl -z-10 group-hover:bg-white/10 transition-all duration-500" />
+                    <div className="absolute -top-6 -right-6 w-24 h-24 sm:w-32 sm:h-32 bg-white/5 rounded-full blur-2xl -z-10 group-hover:bg-white/10 transition-all duration-500" />
                     
-                    <div className={cn("w-14 h-14 rounded-2xl flex items-center justify-center text-2xl text-white shadow-[0_10px_20px_-10px_rgba(0,0,0,0.5),inset_0_2px_4px_rgba(255,255,255,0.2)] bg-gradient-to-br relative transform transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3", card.gradient)}>
-                      <div className="absolute inset-0 rounded-2xl bg-gradient-to-b from-white/20 to-transparent" />
-                      <div className="absolute inset-x-2 bottom-0 h-1/2 bg-black/20 rounded-b-2xl blur-sm" />
-                      <span className="relative z-10 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">{card.icon}</span>
+                    <div className={cn("w-10 h-10 sm:w-14 sm:h-14 rounded-full sm:rounded-2xl flex items-center justify-center text-lg sm:text-2xl text-white shadow-md bg-gradient-to-br relative transform transition-transform duration-500 group-hover:scale-110", card.gradient)}>
+                      <div className="absolute inset-0 rounded-full sm:rounded-2xl bg-black/10" />
+                      <span className="relative z-10">{card.icon}</span>
                     </div>
                     
-                    <div>
-                      <p className="text-sm text-gray-400 font-medium mb-1">{card.title}</p>
-                      <p className="text-base text-gray-200 font-semibold">{card.value}</p>
+                    <div className="w-full">
+                      <p className="text-[10px] sm:text-sm text-gray-400 font-medium uppercase tracking-wider mb-1">{card.title}</p>
+                      <p className="text-xs sm:text-base text-gray-100 font-semibold break-all leading-snug">{card.value}</p>
                     </div>
                   </motion.div>
                 </Tilt>
