@@ -41,10 +41,10 @@ const ServicesSection = () => {
           transition={{ duration: 0.8 }}
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-neon-purple/20 mb-6">
-            <span className="text-sm font-medium text-neon-purple uppercase tracking-wider">What I Do</span>
+            <span className="text-sm font-medium text-neon-purple uppercase tracking-wider">WHAT I BUILD</span>
           </div>
           <h3 className="text-4xl md:text-5xl font-bold">
-            Premium <span className="text-gradient">Services</span>
+            Web & <span className="text-gradient">AI Solutions</span>
           </h3>
         </motion.div>
 

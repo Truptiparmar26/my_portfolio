@@ -105,4 +105,5 @@
 
 // export default CertificatesSection;
 
-export default () => null;
+const CertificatesSection = () => null;
+export default CertificatesSection;

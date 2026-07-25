@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, useState } from 'react';
+import React, { useRef, useMemo, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Points, PointMaterial, Line } from '@react-three/drei';
 import { inSphere } from 'maath/random';
@@ -10,9 +10,7 @@ const NeuralNetwork = (props) => {
   const sphere = useMemo(() => inSphere(new Float32Array(200 * 3), { radius: 2 }), []);
   
   // Create connections (lines) between close particles to form a neural network
-  const [lines, setLines] = useState([]);
-  
-  useMemo(() => {
+  const lines = useMemo(() => {
     const tempLines = [];
     // Check a subset of particles for connections
     for (let i = 0; i < 100; i++) {
@@ -34,7 +32,7 @@ const NeuralNetwork = (props) => {
         }
       }
     }
-    setLines(tempLines);
+    return tempLines;
   }, [sphere]);
 
   useFrame((state, delta) => {
@@ -74,9 +72,11 @@ const NeuralNetwork = (props) => {
 const HeroCanvas = () => {
   return (
     <div className="absolute inset-0 z-0 opacity-60">
-      <Canvas camera={{ position: [0, 0, 3] }}>
-        <NeuralNetwork />
-      </Canvas>
+      <Suspense fallback={null}>
+        <Canvas camera={{ position: [0, 0, 3] }}>
+          <NeuralNetwork />
+        </Canvas>
+      </Suspense>
     </div>
   );
 };
