@@ -1,107 +1,208 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FiMenu, FiX } from 'react-icons/fi';
-import MagneticButton from './MagneticButton';
+import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
+import { FiMenu, FiX, FiFileText } from 'react-icons/fi';
+import { HiSparkles } from 'react-icons/hi';
 
 const navLinks = [
-  { name: 'Home', href: '#home' },
-  { name: 'About', href: '#about' },
-  { name: 'Skills', href: '#skills' },
-  // { name: 'Experience', href: '#experience' },
-  { name: 'Projects', href: '#projects' },
-  { name: 'Contact', href: '#contact' },
+  { name: 'Home', href: '#home', id: 'home' },
+  { name: 'About', href: '#about', id: 'about' },
+  { name: 'Skills', href: '#skills', id: 'skills' },
+  { name: 'Projects', href: '#projects', id: 'projects' },
+  { name: 'Contact', href: '#contact', id: 'contact' },
 ];
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
   const [isOpen, setIsOpen] = useState(false);
+
+  // Framer Motion GPU-Accelerated Live Scroll Progress Telemetry
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 200,
+    damping: 25,
+    restDelta: 0.001,
+  });
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
+      const scrollPos = window.scrollY || document.documentElement.scrollTop;
+      setIsScrolled(scrollPos > 20);
+
+      // High-precision scroll-spy section recognition
+      const scanPosition = scrollPos + 300;
+      for (const link of navLinks) {
+        const element = document.getElementById(link.id);
+        if (element) {
+          const top = element.offsetTop;
+          const height = element.offsetHeight;
+          if (scanPosition >= top && scanPosition <= top + height + 100) {
+            setActiveSection(link.id);
+            break;
+          }
+        }
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Trigger instantly on load
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleNavClick = (e, href) => {
+  const handleNavClick = (e, href, id) => {
     if (href.startsWith('#')) {
       e.preventDefault();
+      setActiveSection(id);
       const element = document.querySelector(href);
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
       setIsOpen(false);
     }
   };
 
   return (
-    <header className={`fixed top-0 left-0 w-full z-40 transition-all duration-300 ${isScrolled ? 'py-4 glass' : 'py-6 bg-transparent'}`}>
-      <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between">
-        
-        {/* Logo */}
-        <a href="#home" onClick={(e) => handleNavClick(e, '#home')} className="text-2xl md:text-3xl font-outfit font-bold tracking-wide text-white z-50 flex items-center group">
-          Trupti<span className="text-gradient ml-1 opacity-90 group-hover:opacity-100 transition-opacity">.dev</span>
-        </a>
+    <>
+      {/* 
+        Ultra-Crisp Top Neon Scroll Progress Line (Like Image 2)
+      */}
+      <div className="fixed top-0 left-0 w-full h-[4px] bg-black/60 z-[9999] pointer-events-none">
+        <motion.div 
+          className="h-full w-full bg-gradient-to-r from-[#00E5FF] via-[#068FFF] via-[#8B5CF6] to-[#D500F9] shadow-[0_0_15px_#00E5FF,_0_0_25px_#8B5CF6,_0_0_30px_#D500F9] origin-left"
+          style={{ scaleX }}
+        />
+      </div>
 
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <a 
-              key={link.name} 
-              href={link.href}
-              onClick={(e) => handleNavClick(e, link.href)}
-              className="text-sm font-medium text-gray-300 hover:text-white transition-colors"
-            >
-              {link.name}
-            </a>
-          ))}
-          {/* <MagneticButton className="btn-primary text-sm px-6 py-2">
-            Hire Me
-          </MagneticButton> */}
-        </nav>
+      {/* Clean Edge-to-Edge Dark Header Band (Removes double-box clunkiness) */}
+      <header 
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 font-outfit px-4 sm:px-8 ${
+          isScrolled
+            ? 'bg-[#050811]/90 backdrop-blur-xl border-b border-white/10 py-3 shadow-[0_10px_30px_rgba(0,0,0,0.85)]'
+            : 'bg-gradient-to-b from-[#050811]/95 to-transparent py-5 border-b border-transparent'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+          
+          {/* 1. Left Side: Brand Logo with Glowing Cyan Dot Next to .dev */}
+          <a 
+            href="#home" 
+            onClick={(e) => handleNavClick(e, '#home', 'home')} 
+            className="text-xl sm:text-2xl font-extrabold tracking-wide text-white flex items-center group cursor-pointer shrink-0"
+          >
+            <span>Trupti</span>
+            <span className="bg-gradient-to-r from-[#00E5FF] to-[#B921FF] bg-clip-text text-transparent ml-0.5 opacity-95 group-hover:opacity-100 group-hover:scale-105 transition-all duration-300 font-black">.dev</span>
+            <span className="ml-2 w-2.5 h-2.5 rounded-full bg-electric-blue shadow-[0_0_12px_#00E5FF] group-hover:animate-ping inline-block"></span>
+          </a>
 
-        {/* Mobile Menu Button */}
-        <button 
-          className="md:hidden text-white text-2xl z-50"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          {isOpen ? <FiX /> : <FiMenu />}
-        </button>
-
-        {/* Mobile Nav Overlay */}
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
-              className="absolute top-0 left-0 w-full h-screen glass flex flex-col items-center justify-center gap-8 z-40"
-            >
-              {navLinks.map((link) => (
+          {/* 2. Center: Image 2 Style Title Case Dark Navigation Capsule */}
+          <nav className="hidden md:flex items-center bg-[#0d121f]/90 border border-white/15 rounded-full p-1.5 shadow-[inset_0_2px_8px_rgba(0,0,0,0.8)] backdrop-blur-xl gap-1">
+            {navLinks.map((link) => {
+              const isActive = activeSection === link.id;
+              return (
                 <a 
                   key={link.name} 
                   href={link.href}
-                  onClick={(e) => handleNavClick(e, link.href)}
-                  className="text-2xl font-bold text-white hover:text-electric-blue transition-colors"
+                  onClick={(e) => handleNavClick(e, link.href, link.id)}
+                  className={`px-4 lg:px-5 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 cursor-pointer ${
+                    isActive 
+                      ? 'text-white bg-gradient-to-r from-[#00c6ff]/25 via-[#0072ff]/35 to-[#8b5cf6]/30 border border-[#00E5FF]/50 shadow-[0_0_18px_rgba(0,229,255,0.35)]' 
+                      : 'text-gray-300 hover:text-white hover:bg-white/5 border border-transparent'
+                  }`}
                 >
-                  {link.name}
+                  <span>{link.name}</span>
                 </a>
-              ))}
-              {/* <button className="btn-primary mt-4">
-                Hire Me
-              </button> */}
+              );
+            })}
+          </nav>
+
+          {/* 3. Right Side: Signature Resume & Hire Me Action Buttons (Like Image 2!) */}
+          <div className="hidden sm:flex items-center gap-3 shrink-0">
+            {/* Resume Pill Button */}
+            <a 
+              href="/resume.pdf" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="hidden lg:flex items-center gap-2 px-4 py-2 rounded-full bg-[#161224] border border-purple-500/35 text-purple-200 text-xs sm:text-sm font-semibold hover:bg-[#221a36] hover:border-purple-400 transition-all duration-300 shadow-[0_0_15px_rgba(168,85,247,0.15)] cursor-pointer"
+            >
+              <FiFileText className="text-purple-400 w-4 h-4" />
+              <span>Resume</span>
+            </a>
+
+            {/* Hire Me Gradient Pill Button */}
+            <a 
+              href="#contact" 
+              onClick={(e) => handleNavClick(e, '#contact', 'contact')} 
+              className="flex items-center gap-2 px-5 py-2 rounded-full bg-gradient-to-r from-electric-blue via-indigo-500 to-neon-purple text-white text-xs sm:text-sm font-bold hover:scale-105 transition-all duration-300 shadow-[0_0_20px_rgba(0,229,255,0.4)] cursor-pointer"
+            >
+              <HiSparkles className="w-4 h-4 text-white animate-spin" style={{ animationDuration: '6s' }} />
+              <span>Hire Me</span>
+            </a>
+          </div>
+
+          {/* Mobile Hamburger Button */}
+          <button 
+            className="md:hidden w-10 h-10 rounded-full glass bg-white/10 border border-white/20 text-white flex items-center justify-center hover:bg-white/20 hover:text-electric-blue transition-colors cursor-pointer"
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label="Toggle Navigation Menu"
+          >
+            {isOpen ? <FiX className="w-5 h-5 text-electric-blue" /> : <FiMenu className="w-5 h-5" />}
+          </button>
+
+        </div>
+
+        {/* Mobile Nav Overlay Dropdown */}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: -10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: -10 }}
+              transition={{ duration: 0.25 }}
+              className="absolute top-16 left-[5%] w-[90%] glass-card bg-midnight-blue/95 border border-white/20 rounded-3xl p-6 shadow-[0_20px_60px_rgba(0,0,0,0.9),_0_0_30px_rgba(0,229,255,0.3)] flex flex-col items-center gap-3 z-40 md:hidden font-outfit"
+            >
+              <div className="w-12 h-1 rounded-full bg-white/20 mb-2"></div>
+              {navLinks.map((link) => {
+                const isActive = activeSection === link.id;
+                return (
+                  <a 
+                    key={link.name} 
+                    href={link.href}
+                    onClick={(e) => handleNavClick(e, link.href, link.id)}
+                    className={`w-full py-3 px-6 rounded-2xl text-center font-semibold text-sm transition-all duration-300 flex items-center justify-center gap-3 ${
+                      isActive
+                        ? 'bg-gradient-to-r from-[#00E5FF] via-[#3B82F6] to-[#8B5CF6] text-white shadow-[0_0_22px_rgba(0,229,255,0.45)]'
+                        : 'text-gray-300 hover:bg-white/10 hover:text-white'
+                    }`}
+                  >
+                    <span>{link.name}</span>
+                  </a>
+                );
+              })}
+
+              <div className="w-full flex items-center justify-between gap-3 mt-2 pt-3 border-t border-white/10">
+                <a 
+                  href="/resume.pdf" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex-1 py-2.5 rounded-xl bg-[#161224] border border-purple-500/35 text-purple-200 text-xs font-semibold flex items-center justify-center gap-2"
+                >
+                  <FiFileText className="text-purple-400 w-4 h-4" />
+                  <span>Resume</span>
+                </a>
+                <a 
+                  href="#contact" 
+                  onClick={(e) => handleNavClick(e, '#contact', 'contact')}
+                  className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-electric-blue to-neon-purple text-white text-xs font-bold flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(0,229,255,0.4)]"
+                >
+                  <HiSparkles className="w-4 h-4 text-white" />
+                  <span>Hire Me</span>
+                </a>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
-    </header>
+      </header>
+    </>
   );
 };
 

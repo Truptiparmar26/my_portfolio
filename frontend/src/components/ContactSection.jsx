@@ -1,7 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Tilt from 'react-parallax-tilt';
-import { FiMail, FiMapPin, FiBriefcase, FiClock, FiGithub, FiLinkedin, FiTwitter, FiInstagram, FiSend, FiCheck, FiArrowRight } from 'react-icons/fi';
+import { FiMail, FiMapPin, FiBriefcase, FiClock, FiGithub, FiLinkedin, FiSend, FiCheck, FiArrowRight } from 'react-icons/fi';
+import { HiSparkles } from 'react-icons/hi';
 import clsx from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import apiClient from '../services/apiClient';
@@ -11,52 +12,13 @@ export function cn(...inputs) {
   return twMerge(clsx(inputs));
 }
 
-// Magnetic effect wrapper
-const Magnetic = ({ children, className }) => {
-  const ref = useRef(null);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-
-  const handleMouse = (e) => {
-    const { clientX, clientY } = e;
-    const { height, width, left, top } = ref.current.getBoundingClientRect();
-    const middleX = clientX - (left + width / 2);
-    const middleY = clientY - (top + height / 2);
-    setPosition({ x: middleX * 0.2, y: middleY * 0.2 });
-  };
-
-  const reset = () => {
-    setPosition({ x: 0, y: 0 });
-  };
-
-  const { x, y } = position;
-  return (
-    <motion.div
-      className={cn("relative inline-block", className)}
-      ref={ref}
-      onMouseMove={handleMouse}
-      onMouseLeave={reset}
-      animate={{ x, y }}
-      transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
-    >
-      {children}
-    </motion.div>
-  );
-};
-
-// Reusable floating label input
+// Reusable high-tech floating label input
 const FloatingInput = ({ id, label, type = "text", value, onChange, isTextArea = false }) => {
   const [isFocused, setIsFocused] = useState(false);
   const isActive = isFocused || value.length > 0;
 
   return (
     <div className="relative group w-full">
-      <div 
-        className={cn(
-          "absolute inset-0 rounded-[18px] transition-all duration-500 blur-xl opacity-0 pointer-events-none",
-          isFocused && "opacity-20 bg-neon-purple"
-        )}
-      />
-      
       {isTextArea ? (
         <textarea
           id={id}
@@ -67,9 +29,9 @@ const FloatingInput = ({ id, label, type = "text", value, onChange, isTextArea =
           required
           rows={5}
           className={cn(
-            "w-full bg-white/[0.02] border border-white/[0.08] rounded-[18px] px-6 py-5 text-white outline-none transition-all duration-300 resize-none",
-            "hover:bg-white/[0.04] hover:border-white/[0.12]",
-            isFocused && "bg-white/[0.05] border-neon-purple/50 shadow-[0_0_0_1px_rgba(185,33,255,0.5)]"
+            "w-full bg-[#0d1222]/90 border border-white/15 rounded-2xl px-6 py-5 text-white outline-none transition-all duration-300 resize-none font-medium text-sm sm:text-base shadow-inner",
+            "hover:border-white/30",
+            isFocused && "bg-[#11172c] border-[#00E5FF]/80 shadow-[0_0_20px_rgba(0,229,255,0.25)]"
           )}
         />
       ) : (
@@ -82,9 +44,9 @@ const FloatingInput = ({ id, label, type = "text", value, onChange, isTextArea =
           onBlur={() => setIsFocused(false)}
           required
           className={cn(
-            "w-full h-[64px] bg-white/[0.02] border border-white/[0.08] rounded-[18px] px-6 text-white outline-none transition-all duration-300",
-            "hover:bg-white/[0.04] hover:border-white/[0.12]",
-            isFocused && "bg-white/[0.05] border-neon-purple/50 shadow-[0_0_0_1px_rgba(185,33,255,0.5)]"
+            "w-full h-16 bg-[#0d1222]/90 border border-white/15 rounded-2xl px-6 text-white outline-none transition-all duration-300 font-medium text-sm sm:text-base shadow-inner",
+            "hover:border-white/30",
+            isFocused && "bg-[#11172c] border-[#00E5FF]/80 shadow-[0_0_20px_rgba(0,229,255,0.25)]"
           )}
         />
       )}
@@ -92,10 +54,10 @@ const FloatingInput = ({ id, label, type = "text", value, onChange, isTextArea =
       <label
         htmlFor={id}
         className={cn(
-          "absolute left-6 text-gray-400 transition-all duration-300 pointer-events-none font-medium",
+          "absolute left-6 transition-all duration-300 pointer-events-none font-bold tracking-wide",
           isActive 
-            ? "-top-3 bg-background px-2 text-xs text-neon-purple" 
-            : "top-[20px] text-base group-hover:text-gray-300"
+            ? "-top-2.5 bg-[#0a0f1d] px-2.5 text-xs text-[#00E5FF] border border-[#00E5FF]/40 rounded-full shadow-sm" 
+            : "top-5 text-sm sm:text-base text-gray-400 group-hover:text-gray-300"
         )}
       >
         {label}
@@ -120,7 +82,7 @@ const ContactSection = () => {
     setSubmitError('');
     
     try {
-      // 1. Send email directly from the browser via Web3Forms to bypass server blocking
+      // 1. Send email directly from the browser via Web3Forms
       await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: {
@@ -151,200 +113,167 @@ const ContactSection = () => {
   };
 
   const infoCards = [
-    { icon: <FiMail />, title: 'Email', value: 'truptiofficial.it@gmail.com', gradient: 'from-neon-purple to-royal-violet' },
-    { icon: <FiMapPin />, title: 'Location', value: 'Ahmedabad, India', gradient: 'from-electric-blue to-accent-blue' },
-    { icon: <FiBriefcase />, title: 'Freelance', value: 'Available for work', gradient: 'from-soft-gold to-yellow-600' },
-    { icon: <FiClock />, title: 'Response Time', value: 'Within 24 Hours', gradient: 'from-neon-purple to-electric-blue' },
+    { icon: <FiMail />, title: 'Email', value: 'truptiofficial.it@gmail.com', gradient: 'from-[#D500F9] to-[#8B5CF6]', shadow: 'shadow-[0_0_22px_rgba(213,0,249,0.45)]' },
+    { icon: <FiMapPin />, title: 'Location', value: 'Ahmedabad, India', gradient: 'from-[#00E5FF] to-[#0072ff]', shadow: 'shadow-[0_0_22px_rgba(0,229,255,0.45)]' },
+    { icon: <FiBriefcase />, title: 'Freelance', value: 'Available for work', gradient: 'from-[#F59E0B] to-[#D97706]', shadow: 'shadow-[0_0_22px_rgba(245,158,11,0.45)]' },
+    { icon: <FiClock />, title: 'Response Time', value: 'Within 24 Hours', gradient: 'from-[#3B82F6] to-[#8B5CF6]', shadow: 'shadow-[0_0_22px_rgba(59,130,246,0.45)]' },
   ];
 
   const socialLinks = [
-    { icon: <FiGithub />, href: 'https://github.com/Truptiparmar26' },
-    { icon: <FiLinkedin />, href: 'https://www.linkedin.com/in/trupti-parmar-46a5082a0' },
-    { icon: <FiMail />, href: 'mailto:truptiofficial.it@gmail.com' },
+    { icon: <FiGithub />, href: 'https://github.com/Truptiparmar26', name: 'GitHub' },
+    { icon: <FiLinkedin />, href: 'https://www.linkedin.com/in/trupti-parmar-46a5082a0', name: 'LinkedIn' },
+    { icon: <FiMail />, href: 'mailto:truptiofficial.it@gmail.com', name: 'Email' },
   ];
 
   return (
-    <section 
-      className="relative w-full bg-background overflow-hidden py-[140px] px-6 lg:px-12 selection:bg-neon-purple/30" 
-      id="contact"
-    >
-      {/* Background Animated Gradient Blobs */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
-        <motion.div 
-          animate={{ scale: [1, 1.2, 1], rotate: [0, 90, 0], opacity: [0.15, 0.25, 0.15] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute -top-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-neon-purple/20 blur-[120px]"
-        />
-        <motion.div 
-          animate={{ scale: [1, 1.3, 1], rotate: [0, -90, 0], opacity: [0.1, 0.2, 0.1] }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          className="absolute top-[40%] -right-[10%] w-[60%] h-[60%] rounded-full bg-electric-blue/20 blur-[150px]"
-        />
-        <motion.div 
-          animate={{ scale: [1, 1.1, 1], opacity: [0.1, 0.15, 0.1] }}
-          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute -bottom-[20%] left-[20%] w-[40%] h-[40%] rounded-full bg-cyan-glow/20 blur-[120px]"
-        />
-        
-        {/* Subtle Grid Overlay */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,#000_10%,transparent_100%)]" />
-      </div>
+    <section className="relative w-full bg-[#04070e] overflow-hidden py-32 px-4 sm:px-8 z-10" id="contact">
+      {/* Ambient Cybernetic Lighting Blobs */}
+      <div className="absolute top-1/3 left-10 w-96 h-96 bg-[#00E5FF]/10 rounded-full blur-[140px] pointer-events-none"></div>
+      <div className="absolute bottom-10 right-10 w-96 h-96 bg-[#8B5CF6]/15 rounded-full blur-[140px] pointer-events-none"></div>
 
-      <div className="max-w-[1400px] mx-auto relative z-10">
+      <div className="max-w-7xl mx-auto relative z-10">
         
         {/* Header Section */}
         <motion.div 
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-col items-center justify-center text-center mb-24"
+          transition={{ duration: 0.8 }}
+          className="flex flex-col items-center justify-center text-center mb-20"
         >
-          <motion.div 
-            initial={{ scale: 0.8, opacity: 0 }}
-            whileInView={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-            className="px-4 py-2 rounded-full border border-white/10 bg-white/[0.02] backdrop-blur-md mb-8 inline-flex items-center gap-2"
-          >
-            <span className="w-2 h-2 rounded-full bg-electric-blue animate-ping" />
-            <span className="text-xs font-semibold uppercase tracking-widest text-gray-300">Get in Touch</span>
-          </motion.div>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#0d1222] border border-[#00E5FF]/40 shadow-[0_0_20px_rgba(0,229,255,0.25)] mb-5">
+            <HiSparkles className="w-4 h-4 text-electric-blue animate-pulse" />
+            <span className="text-xs font-extrabold text-electric-blue uppercase tracking-widest">Connect With Me</span>
+          </div>
           
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter mb-6">
-            Contact <span className="text-gradient">Information</span>
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white mb-5">
+            Contact <span className="text-gradient font-black">Information</span>
           </h2>
-          <p className="text-lg md:text-xl text-gray-400 max-w-2xl font-medium">
-Ready to bring your vision to life? I'd love to hear about your next project.          </p>
+          <p className="text-sm sm:text-base text-gray-300 max-w-2xl font-medium leading-relaxed">
+            Ready to bring your architectural vision to life? Get in touch today—I would love to discuss how we can build something extraordinary together.
+          </p>
         </motion.div>
 
-        {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-12 lg:gap-20 items-start">
+        {/* Main Content Grid - EXACT SAME LAYOUT STRUCTURE */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1.25fr_1fr] gap-10 lg:gap-14 items-start">
           
-          {/* Form Side */}
+          {/* Form Console Side (Left) */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={{ duration: 0.8 }}
           >
-            <div className="relative p-1 rounded-[32px] bg-gradient-to-b from-white/10 to-transparent group hover:from-neon-purple/30 transition-all duration-700">
-              <div className="bg-background/90 backdrop-blur-[25px] p-8 md:p-10 rounded-[28px] border border-white/[0.05] relative overflow-hidden">
+            <div className="glass-card bg-[#080d1a]/95 backdrop-blur-2xl p-7 sm:p-11 rounded-[2.5rem] border border-white/15 hover:border-[#00E5FF]/50 shadow-[0_20px_60px_rgba(0,0,0,0.85),_0_0_35px_rgba(0,229,255,0.15)] relative overflow-hidden transition-all duration-500 group/form">
+              
+              {/* Top Neon Accent Beam */}
+              <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-[#00E5FF] via-[#3B82F6] to-[#8B5CF6]"></div>
+
+              {/* Interior Background Aura */}
+              <div className="absolute top-0 right-0 w-72 h-72 bg-[#8B5CF6]/10 rounded-full blur-[100px] pointer-events-none group-hover/form:bg-[#00E5FF]/15 transition-colors duration-700"></div>
+
+              {submitError && (
+                <div className="mb-6 p-4 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-400 text-sm font-semibold flex items-center gap-3">
+                  <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+                  <span>{submitError}</span>
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit} className="flex flex-col gap-6 relative z-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <FloatingInput id="name" label="Full Name" value={formData.name} onChange={handleChange} />
+                  <FloatingInput id="email" label="Email Address" type="email" value={formData.email} onChange={handleChange} />
+                </div>
                 
-                {/* Form Ambient Glow */}
-                <div className="absolute top-0 right-0 w-64 h-64 bg-neon-purple/10 rounded-full blur-[80px] -z-10 group-hover:bg-electric-blue/20 transition-all duration-700 pointer-events-none" />
+                <FloatingInput id="subject" label="Subject" value={formData.subject} onChange={handleChange} />
+                <FloatingInput id="message" label="Your Message" value={formData.message} onChange={handleChange} isTextArea />
+                
+                <div className="mt-2 flex items-center justify-start">
+                  <button 
+                    type="submit" 
+                    disabled={isSubmitting || isSubmitted}
+                    className={cn(
+                      "relative min-w-[240px] h-14 sm:h-16 px-8 rounded-full transition-all duration-300 font-extrabold text-sm sm:text-base tracking-wider flex items-center justify-center gap-3 cursor-pointer shadow-[0_0_25px_rgba(0,229,255,0.4)] hover:shadow-[0_0_40px_rgba(0,229,255,0.7)] transform hover:-translate-y-0.5 uppercase",
+                      isSubmitting || isSubmitted ? "cursor-not-allowed opacity-80" : "hover:scale-105",
+                      isSubmitted ? "bg-emerald-500 text-white shadow-[0_0_25px_rgba(16,185,129,0.5)]" : "bg-gradient-to-r from-[#00E5FF] via-[#3B82F6] to-[#8B5CF6] text-white"
+                    )}
+                  >
+                    <AnimatePresence mode="wait">
+                      {isSubmitting ? (
+                        <motion.span key="loading" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex items-center gap-2">
+                          <span>Transmission...</span>
+                        </motion.span>
+                      ) : isSubmitted ? (
+                        <motion.span key="success" initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }} className="flex items-center gap-2 font-bold">
+                          <span>Message Transmitted!</span> <FiCheck className="text-xl text-white" />
+                        </motion.span>
+                      ) : (
+                        <motion.span key="default" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex items-center gap-3 group/btn">
+                          <span>Send Message</span> 
+                          <FiArrowRight className="text-lg transition-transform duration-300 group-hover/btn:translate-x-1.5" />
+                        </motion.span>
+                      )}
+                    </AnimatePresence>
+                  </button>
+                </div>
+              </form>
 
-                {submitError && (
-                  <div className="mb-8 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm flex items-center gap-3">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
-                    {submitError}
-                  </div>
-                )}
-
-                <form onSubmit={handleSubmit} className="flex flex-col gap-6 relative z-10">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <FloatingInput id="name" label="Full Name" value={formData.name} onChange={handleChange} />
-                    <FloatingInput id="email" label="Email Address" type="email" value={formData.email} onChange={handleChange} />
-                  </div>
-                  
-                  <FloatingInput id="subject" label="Subject" value={formData.subject} onChange={handleChange} />
-                  <FloatingInput id="message" label="Your Message" value={formData.message} onChange={handleChange} isTextArea />
-                  
-                  <div className="mt-4">
-                    <Magnetic>
-                      <button 
-                        type="submit" 
-                        disabled={isSubmitting || isSubmitted}
-                        className={cn(
-                          "relative w-full h-[64px] rounded-full overflow-hidden transition-all duration-300 font-semibold text-lg flex items-center justify-center gap-3",
-                          isSubmitting || isSubmitted ? "cursor-not-allowed" : "hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(139,92,246,0.3)]",
-                          isSubmitted ? "bg-emerald-500 text-white" : "bg-white text-black hover:bg-transparent hover:text-white"
-                        )}
-                      >
-                        {/* Gradient outline on hover when transparent */}
-                        {!isSubmitted && (
-                          <div className="absolute inset-0 rounded-full p-[2px] bg-gradient-to-r from-neon-purple via-electric-blue to-royal-violet opacity-0 hover:opacity-100 transition-opacity duration-300 -z-10">
-                            <div className="w-full h-full bg-background rounded-full" />
-                          </div>
-                        )}
-                        
-                        {/* Shimmer effect */}
-                        <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent group-hover:animate-[shimmer_1.5s_infinite] pointer-events-none" />
-
-                        <AnimatePresence mode="wait">
-                          {isSubmitting ? (
-                            <motion.span key="loading" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                              Sending...
-                            </motion.span>
-                          ) : isSubmitted ? (
-                            <motion.span key="success" initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }} className="flex items-center gap-2">
-                              Message Sent <FiCheck className="text-xl" />
-                            </motion.span>
-                          ) : (
-                            <motion.span key="default" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex items-center gap-2 group/btn z-10">
-                              Send Message 
-                              <FiArrowRight className="text-xl transition-transform duration-300 group-hover/btn:translate-x-1" />
-                            </motion.span>
-                          )}
-                        </AnimatePresence>
-                      </button>
-                    </Magnetic>
-                  </div>
-                </form>
-              </div>
             </div>
           </motion.div>
 
-          {/* Info Side */}
+          {/* Info Cards Side (Right) - EXACT SAME 2x2 + SOCIAL HUB STRUCTURE */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: "easeOut", staggerChildren: 0.1 }}
-            className="flex flex-col gap-6"
+            transition={{ duration: 0.8 }}
+            className="flex flex-col gap-8"
           >
-            <div className="grid grid-cols-2 gap-3 sm:gap-6">
+            {/* 2x2 Info Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
               {infoCards.map((card, idx) => (
                 <Tilt 
                   key={idx}
-                  tiltMaxAngleX={5} 
-                  tiltMaxAngleY={5} 
-                  perspective={1000} 
+                  tiltMaxAngleX={4} 
+                  tiltMaxAngleY={4} 
                   scale={1.02} 
                   transitionSpeed={2000} 
-                  gyroscope={true}
                 >
-                  <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: idx * 0.1, duration: 0.5 }}
-                    className="group h-full p-4 sm:p-6 rounded-[20px] sm:rounded-3xl bg-white/[0.02] border border-white/[0.08] hover:border-white/[0.15] hover:bg-white/[0.04] transition-all duration-300 flex flex-col justify-between items-start gap-4 relative overflow-hidden backdrop-blur-md shadow-lg"
-                  >
-                    <div className="absolute -top-6 -right-6 w-24 h-24 sm:w-32 sm:h-32 bg-white/5 rounded-full blur-2xl -z-10 group-hover:bg-white/10 transition-all duration-500" />
+                  <div className="glass-card bg-[#080e1d]/90 backdrop-blur-2xl p-6 rounded-3xl border border-white/10 hover:border-[#00E5FF]/60 transition-all duration-500 flex flex-col justify-between items-start gap-5 shadow-xl hover:shadow-[0_15px_40px_rgba(0,0,0,0.85),_0_0_25px_rgba(0,229,255,0.2)] transform hover:-translate-y-1.5 group/card h-full">
                     
-                    <div className={cn("w-10 h-10 sm:w-14 sm:h-14 rounded-full sm:rounded-2xl flex items-center justify-center text-lg sm:text-2xl text-white shadow-md bg-gradient-to-br relative transform transition-transform duration-500 group-hover:scale-110", card.gradient)}>
-                      <div className="absolute inset-0 rounded-full sm:rounded-2xl bg-black/10" />
-                      <span className="relative z-10">{card.icon}</span>
+                    {/* Glowing Icon Pedestal */}
+                    <div className={cn("w-14 h-14 rounded-2xl flex items-center justify-center text-2xl text-white bg-gradient-to-br transform transition-transform duration-500 group-hover/card:scale-110 group-hover/card:rotate-6", card.gradient, card.shadow)}>
+                      <span>{card.icon}</span>
                     </div>
                     
                     <div className="w-full">
-                      <p className="text-[10px] sm:text-sm text-gray-400 font-medium uppercase tracking-wider mb-1">{card.title}</p>
-                      <p className="text-xs sm:text-base text-gray-100 font-semibold break-all leading-snug">{card.value}</p>
+                      <p className="text-xs text-gray-400 font-extrabold uppercase tracking-widest mb-1">{card.title}</p>
+                      <p className="text-sm sm:text-base text-white font-bold break-all leading-snug group-hover/card:text-cyan-300 transition-colors duration-300">{card.value}</p>
                     </div>
-                  </motion.div>
+
+                  </div>
                 </Tilt>
               ))}
             </div>
 
-            {/* Socials row */}
-            <div className="mt-8 p-8 rounded-3xl bg-gradient-to-br from-white/[0.05] to-transparent border border-white/[0.05] flex flex-col items-center justify-center gap-6 relative z-50">
-              <p className="text-gray-400 font-medium text-sm tracking-widest uppercase">Connect Elsewhere</p>
-              <div className="flex items-center gap-4 flex-wrap justify-center relative z-50">
+            {/* "CONNECT ELSEWHERE" High-Tech Social Console */}
+            <div className="glass-card bg-[#080e1d]/95 backdrop-blur-2xl p-8 rounded-3xl border border-white/10 hover:border-white/25 flex flex-col items-center justify-center gap-6 relative overflow-hidden shadow-[0_15px_45px_rgba(0,0,0,0.85)] group/social">
+              
+              <div className="absolute inset-0 bg-gradient-to-r from-[#00E5FF]/5 via-transparent to-[#8B5CF6]/5 opacity-50 group-hover/social:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+
+              <p className="text-cyan-300 font-black text-xs tracking-widest uppercase flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-electric-blue animate-pulse"></span>
+                <span>Connect Elsewhere</span>
+              </p>
+
+              <div className="flex items-center gap-5 flex-wrap justify-center relative z-10">
                 {socialLinks.map((social, idx) => (
                   <a 
                     key={idx}
                     href={social.href}
                     target={social.href !== '#' ? "_blank" : undefined}
                     rel={social.href !== '#' ? "noopener noreferrer" : undefined}
+                    aria-label={social.name}
                     onClick={(e) => {
                       if (social.href !== '#') {
                         e.preventDefault();
@@ -355,36 +284,36 @@ Ready to bring your vision to life? I'd love to hear about your next project.   
                         }
                       }
                     }}
-                    className="w-14 h-14 rounded-full bg-white/[0.03] border border-white/[0.08] flex items-center justify-center text-xl text-gray-300 hover:text-white hover:bg-white/[0.1] hover:border-white/[0.2] transition-all duration-300 relative group overflow-hidden shadow-[inset_0_2px_10px_rgba(255,255,255,0.05)] cursor-pointer z-50"
+                    className="w-16 h-16 rounded-2xl bg-[#101528] border border-white/15 hover:border-[#00E5FF]/70 flex items-center justify-center text-2xl text-gray-300 hover:text-white transition-all duration-300 relative group/icon shadow-[0_6px_20px_rgba(0,0,0,0.6)] hover:shadow-[0_0_25px_rgba(0,229,255,0.45)] hover:scale-110 hover:-translate-y-1 cursor-pointer"
                   >
-                    <div className="absolute inset-0 bg-gradient-to-br from-neon-purple/20 to-electric-blue/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-                    <span className="relative z-10 group-hover:scale-110 transition-transform duration-300 pointer-events-none flex items-center justify-center w-full h-full">
+                    <span className="relative z-10 group-hover/icon:scale-110 transition-transform duration-300">
                       {social.icon}
                     </span>
                   </a>
                 ))}
               </div>
+
             </div>
           </motion.div>
 
         </div>
       </div>
 
-      {/* Toast Notification */}
+      {/* Success Notification Toast */}
       <AnimatePresence>
         {isSubmitted && (
           <motion.div
             initial={{ opacity: 0, y: 50, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
-            className="fixed bottom-8 right-8 z-50 flex items-center gap-4 px-6 py-4 rounded-2xl bg-background/95 backdrop-blur-xl border border-emerald-500/30 shadow-[0_8px_32px_rgba(16,185,129,0.2)]"
+            className="fixed bottom-8 right-8 z-50 flex items-center gap-4 px-6 py-4 rounded-2xl bg-[#0b1222]/95 backdrop-blur-2xl border border-emerald-500/50 shadow-[0_12px_40px_rgba(16,185,129,0.35)]"
           >
-            <div className="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0">
+            <div className="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0 shadow-[0_0_12px_rgba(16,185,129,0.4)]">
               <FiCheck className="text-xl" />
             </div>
             <div>
-              <h4 className="text-white font-semibold text-sm">Success</h4>
-              <p className="text-sm text-gray-400">Message sent successfully!</p>
+              <h4 className="text-white font-bold text-sm">Transmission Confirmed</h4>
+              <p className="text-xs text-gray-300 font-medium">Your message has been sent successfully!</p>
             </div>
           </motion.div>
         )}
