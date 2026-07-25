@@ -6,13 +6,12 @@ import * as THREE from 'three';
 
 const NeuralNetwork = (props) => {
   const ref = useRef();
-  // Generate fewer particles for a cleaner look
+  // Generate fewer particles for a clean, calm background
   const sphere = useMemo(() => inSphere(new Float32Array(200 * 3), { radius: 2 }), []);
   
-  // Create connections (lines) between close particles to form a neural network
+  // Create subtle neural network connections between close particles
   const lines = useMemo(() => {
     const tempLines = [];
-    // Check a subset of particles for connections
     for (let i = 0; i < 100; i++) {
       for (let j = i + 1; j < 100; j++) {
         const x1 = sphere[i * 3];
@@ -23,10 +22,8 @@ const NeuralNetwork = (props) => {
         const y2 = sphere[j * 3 + 1];
         const z2 = sphere[j * 3 + 2];
         
-        // Calculate distance
         const dist = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2) + Math.pow(z2 - z1, 2));
         
-        // Connect if close enough
         if (dist < 0.5) {
           tempLines.push([new THREE.Vector3(x1, y1, z1), new THREE.Vector3(x2, y2, z2)]);
         }

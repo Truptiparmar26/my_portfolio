@@ -7,145 +7,203 @@ import { FiDownload, FiArrowRight, FiGithub } from 'react-icons/fi';
 
 const HeroSection = () => {
   return (
-    <div id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+    <div id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 pb-16">
       <HeroCanvas />
       
-      <div className="max-w-7xl w-full mx-auto px-4 md:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center z-10">
+      <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 md:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center z-10">
         
-        {/* Left Side: Content */}
-        <div className="flex flex-col items-start text-left">
+        {/* Left Side: Professional Content (7 Columns on Desktop) */}
+        <div className="lg:col-span-7 flex flex-col items-start text-left">
           
-          {/* Availability Badge */}
+          {/* Glowing Availability Badge */}
           <motion.div 
-            className="flex items-center gap-2 px-4 py-2 rounded-full glass border border-white/10 mb-8"
+            className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full glass border border-electric-blue/30 shadow-[0_0_20px_rgba(0,229,255,0.15)] mb-8 backdrop-blur-xl"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <span className="relative flex h-3 w-3">
+            <span className="relative flex h-2.5 w-2.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-electric-blue opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-electric-blue"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-electric-blue"></span>
             </span>
-            <span className="text-sm font-medium text-gray-300">Available for Full-Time Opportunities</span>
+            <span className="text-xs md:text-sm font-bold tracking-wider uppercase bg-gradient-to-r from-electric-blue via-cyan-300 to-neon-purple bg-clip-text text-transparent">
+              Available for Opportunities
+            </span>
           </motion.div>
 
+          {/* Greeting Header */}
           <motion.h2 
-            className="text-xl md:text-2xl text-gray-400 mb-2 font-medium"
+            className="text-lg md:text-2xl font-semibold text-gray-300 mb-3 tracking-wide flex items-center gap-2"
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            Hi, I'm Trupti Parmar
+            <span>Hi, I'm</span>
+            <span className="text-white font-bold tracking-normal underline decoration-neon-purple decoration-2 underline-offset-4">Trupti Parmar</span>
+            <span className="inline-block origin-bottom-right hover:rotate-12 transition-transform duration-300 cursor-pointer">👋</span>
           </motion.h2>
 
+          {/* High-Impact Main Headline with Outfit Font */}
           <motion.h1 
-            className="text-5xl md:text-7xl font-bold mb-6 tracking-tighter leading-tight"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-[64px] font-outfit font-extrabold mb-6 tracking-tight leading-[1.14] text-white"
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            AI /Ml Enthusiast &<br />
-            <span className="text-gradient">MERN Stack</span> Dev.
+            AI/ML Enthusiast &<br />
+            <span className="text-gradient font-black tracking-normal drop-shadow-[0_0_40px_rgba(185,33,255,0.35)]">MERN Stack Dev.</span>
           </motion.h1>
 
+          {/* Professional Animated Subtitle & Engineering Summary */}
           <motion.div 
-            className="text-lg md:text-2xl text-gray-300 mb-10 h-[60px]"
+            className="mb-10 w-full max-w-xl text-left"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.8 }}
           >
-            <TypeAnimation
-              sequence={[
-                'Creating Intelligent Digital Experiences.',
-                2000,
-                'Building Scalable AI Solutions.',
-                2000,
-                'Engineering the Future of the Web.',
-                2000,
-              ]}
-              wrapper="span"
-              speed={50}
-              repeat={Infinity}
-              className="text-gray-300"
-            />
+            <div className="text-lg md:text-2xl font-semibold text-gray-200 min-h-[38px] flex items-center gap-2 mb-3">
+              <span className="text-electric-blue font-mono font-bold">❯</span>
+              <TypeAnimation
+                sequence={[
+                  'Creating Intelligent Digital Experiences.',
+                  2500,
+                  'Building Scalable Full-Stack Web Apps.',
+                  2500,
+                  'Architecting Modern MERN & AI Solutions.',
+                  2500,
+                  'Solving Complex Problems with Clean Code.',
+                  2500,
+                ]}
+                wrapper="span"
+                speed={50}
+                repeat={Infinity}
+                className="text-transparent bg-clip-text bg-gradient-to-r from-gray-100 via-white to-gray-400 font-bold tracking-tight"
+              />
+            </div>
+            <p className="text-sm md:text-base text-gray-400 leading-relaxed font-normal">
+              Combining cutting-edge Artificial Intelligence with high-performance MERN stack software engineering to design reactive, resilient, and state-of-the-art web applications.
+            </p>
           </motion.div>
           
+          {/* Action Buttons */}
           <motion.div 
-            className="flex flex-wrap gap-4"
+            className="flex flex-wrap items-center gap-4 w-full"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 1 }}
           >
             <MagneticButton 
               onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-              className="btn-primary flex items-center gap-2"
+              className="px-8 py-4 rounded-full bg-gradient-to-r from-electric-blue via-indigo-600 to-neon-purple text-white font-bold text-sm md:text-base tracking-wide shadow-[0_0_25px_rgba(0,229,255,0.35)] hover:shadow-[0_0_45px_rgba(185,33,255,0.55)] hover:scale-105 transition-all duration-300 flex items-center gap-3 group"
             >
-              Explore Projects <FiArrowRight />
+              <span>Explore Projects</span>
+              <FiArrowRight className="group-hover:translate-x-1.5 transition-transform text-lg" />
             </MagneticButton>
             
-            <MagneticButton className="px-6 py-3 rounded-full border border-white/10 glass hover:border-electric-blue/50 hover:bg-white/5 transition-all flex items-center gap-2 text-white">
-              Download Resume <FiDownload />
+            <MagneticButton className="px-7 py-4 rounded-full border border-white/20 glass hover:border-electric-blue text-gray-200 hover:text-white font-semibold text-sm md:text-base tracking-wide shadow-lg hover:shadow-[0_0_25px_rgba(0,229,255,0.2)] transition-all flex items-center gap-3 group">
+              <span>Download Resume</span>
+              <FiDownload className="group-hover:-translate-y-0.5 transition-transform text-electric-blue text-lg" />
             </MagneticButton>
 
             <MagneticButton 
               onClick={() => window.open('https://github.com/Truptiparmar26', '_blank')}
-              className="w-12 h-12 rounded-full border border-white/10 glass flex items-center justify-center hover:border-neon-purple/50 hover:bg-white/5 transition-all text-white hover:text-neon-purple"
+              className="w-13 h-13 p-3.5 rounded-full border border-white/20 glass flex items-center justify-center hover:border-neon-purple hover:bg-white/10 transition-all text-white hover:text-neon-purple shadow-md"
             >
               <FiGithub className="text-xl" />
             </MagneticButton>
           </motion.div>
         </div>
 
-        {/* Right Side: 3D Hologram / Brain Placeholder */}
+        {/* Right Side: Futuristic Tech Solar System (5 Columns on Desktop) */}
         <motion.div 
-          className="hidden lg:flex relative h-[400px] lg:h-[600px] w-full items-center justify-center"
-          initial={{ opacity: 0, scale: 0.8 }}
+          className="hidden lg:col-span-5 lg:flex relative h-[520px] w-full items-center justify-center"
+          initial={{ opacity: 0, scale: 0.85 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.5, delay: 0.5, ease: "easeOut" }}
         >
-          {/* This is a visual representation of the AI Brain / Tech Stack Hologram */}
-          <div className="absolute inset-0 bg-gradient-radial from-electric-blue/10 to-transparent blur-3xl opacity-50"></div>
+          {/* Ambient Cosmic Glows */}
+          <div className="absolute w-[360px] h-[360px] bg-gradient-to-tr from-electric-blue/25 via-neon-purple/25 to-transparent rounded-full blur-[80px] pointer-events-none animate-pulse-slow"></div>
           
-          <div className="relative w-64 h-64 rounded-full border border-white/5 glass animate-spin-slow flex items-center justify-center">
-            <div className="absolute w-72 h-72 rounded-full border-t border-b border-neon-purple/30 animate-[spin_10s_reverse_linear_infinite]"></div>
+          {/* Outer Rotating Orbital Rings */}
+          <div className="absolute w-[420px] h-[420px] rounded-full border border-dashed border-white/10 animate-[spin_45s_linear_infinite] pointer-events-none"></div>
+          <div className="absolute w-[320px] h-[320px] rounded-full border border-white/15 glass animate-[spin_30s_reverse_linear_infinite]">
+            <div className="absolute -top-1.5 left-1/2 w-3 h-3 bg-electric-blue rounded-full shadow-[0_0_12px_#00E5FF]"></div>
+            <div className="absolute -bottom-1.5 left-1/2 w-3 h-3 bg-neon-purple rounded-full shadow-[0_0_12px_#B921FF]"></div>
+          </div>
+          
+          {/* Inner Orbital Hub & Core */}
+          <div className="relative w-64 h-64 rounded-full border border-white/20 glass flex items-center justify-center shadow-[0_0_60px_rgba(0,0,0,0.6)]">
             
-            {/* Core */}
-            <div className="w-24 h-24 bg-gradient-to-br from-electric-blue to-neon-purple rounded-full blur-sm animate-pulse-slow"></div>
-            <div className="absolute w-20 h-20 bg-background rounded-full z-10 flex items-center justify-center border border-white/10">
-              <span className="text-2xl">🧠</span>
+            {/* Holographic Glowing Center Core */}
+            <div className="absolute w-36 h-36 bg-gradient-to-br from-electric-blue via-purple-600 to-neon-purple rounded-full blur-md animate-pulse-slow opacity-75"></div>
+            <div className="relative w-32 h-32 bg-midnight-blue/95 backdrop-blur-2xl rounded-full z-10 flex flex-col items-center justify-center border-2 border-white/20 shadow-[0_0_40px_rgba(185,33,255,0.45)] group hover:scale-105 transition-transform duration-500 cursor-pointer">
+              <span className="text-3xl mb-1 filter drop-shadow-[0_0_10px_#00E5FF]">🚀</span>
+              <span className="text-xs font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-white to-electric-blue">FULL STACK</span>
+              <span className="text-[10px] font-mono text-neon-purple font-bold">MERN + AI</span>
             </div>
             
-            {/* Orbiting Tech Nodes */}
-            <div className="absolute -top-4 w-12 h-12 rounded-full glass border border-white/10 flex items-center justify-center shadow-[0_0_15px_#00E5FF] animate-pulse">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React" className="w-6 h-6" />
-            </div>
-            <div className="absolute -bottom-4 w-12 h-12 rounded-full glass border border-white/10 flex items-center justify-center shadow-[0_0_15px_#B921FF] animate-pulse" style={{ animationDelay: '1s' }}>
-              <img src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Node.js_logo.svg" alt="Node" className="w-6 h-6" />
-            </div>
-            <div className="absolute -left-4 w-12 h-12 rounded-full glass border border-white/10 flex items-center justify-center shadow-[0_0_15px_#FFD700] animate-pulse" style={{ animationDelay: '2s' }}>
-              <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Python" className="w-6 h-6" />
-            </div>
-            <div className="absolute -right-4 w-12 h-12 rounded-full glass border border-white/10 flex items-center justify-center shadow-[0_0_15px_#00FFFF] animate-pulse" style={{ animationDelay: '3s' }}>
-              <span className="text-sm font-bold text-white">AI</span>
-            </div>
+            {/* Orbiting High-Tech Nodes */}
+            <motion.div 
+              className="absolute -top-7 w-16 h-16 rounded-2xl glass bg-midnight-blue/90 border border-white/20 flex flex-col items-center justify-center shadow-[0_0_25px_rgba(0,229,255,0.35)] hover:scale-125 transition-transform duration-300 z-20 cursor-pointer"
+              animate={{ y: [-5, 5, -5] }}
+              transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
+            >
+              <img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React" className="w-8 h-8 mb-0.5" />
+              <span className="text-[9px] font-bold text-cyan-300 tracking-wider">React</span>
+            </motion.div>
+
+            <motion.div 
+              className="absolute -bottom-7 w-16 h-16 rounded-2xl glass bg-midnight-blue/90 border border-white/20 flex flex-col items-center justify-center shadow-[0_0_25px_rgba(185,33,255,0.35)] hover:scale-125 transition-transform duration-300 z-20 cursor-pointer"
+              animate={{ y: [5, -5, 5] }}
+              transition={{ repeat: Infinity, duration: 3.5, ease: "easeInOut" }}
+            >
+              <img src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Node.js_logo.svg" alt="Node" className="w-7 h-7 mb-0.5" />
+              <span className="text-[9px] font-bold text-green-400 tracking-wider">Node.js</span>
+            </motion.div>
+
+            <motion.div 
+              className="absolute -left-8 w-16 h-16 rounded-2xl glass bg-midnight-blue/90 border border-white/20 flex flex-col items-center justify-center shadow-[0_0_25px_rgba(255,215,0,0.35)] hover:scale-125 transition-transform duration-300 z-20 cursor-pointer"
+              animate={{ x: [-5, 5, -5] }}
+              transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+            >
+              <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Python" className="w-7 h-7 mb-0.5" />
+              <span className="text-[9px] font-bold text-yellow-300 tracking-wider">Python</span>
+            </motion.div>
+
+            <motion.div 
+              className="absolute -right-8 w-16 h-16 rounded-2xl glass bg-midnight-blue/90 border border-white/20 flex flex-col items-center justify-center shadow-[0_0_25px_rgba(0,255,255,0.4)] hover:scale-125 transition-transform duration-300 z-20 cursor-pointer"
+              animate={{ x: [5, -5, 5] }}
+              transition={{ repeat: Infinity, duration: 4.5, ease: "easeInOut" }}
+            >
+              <span className="text-xl mb-0.5">🧠</span>
+              <span className="text-[9px] font-black text-electric-blue tracking-wider">AI / ML</span>
+            </motion.div>
           </div>
         </motion.div>
 
       </div>
       
-      {/* Scroll indicator */}
+      {/* Interactive "Scroll Now" Button */}
       <motion.div 
-        className="absolute bottom-10 z-10 left-1/2 -translate-x-1/2"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 1 }}
+        className="absolute bottom-6 z-20 left-1/2 -translate-x-1/2 cursor-pointer"
+        onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.2, duration: 0.8 }}
       >
-        <div className="w-[30px] h-[50px] rounded-full border-2 border-white/10 flex justify-center p-2 glass">
+        <div className="px-5 py-2.5 rounded-full glass border border-white/20 hover:border-electric-blue flex items-center gap-2.5 transition-all duration-300 group hover:shadow-[0_0_25px_rgba(0,229,255,0.4)] hover:scale-105 bg-midnight-blue/80 backdrop-blur-md">
+          <span className="text-xs md:text-sm font-outfit font-bold tracking-wider uppercase text-gray-200 group-hover:text-electric-blue transition-colors">
+            Scroll Now
+          </span>
           <motion.div 
-            className="w-2 h-2 bg-electric-blue rounded-full shadow-[0_0_10px_#00E5FF]"
-            animate={{ y: [0, 15, 0], opacity: [1, 0.5, 1] }}
-            transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-          />
+            className="flex items-center justify-center w-6 h-6 rounded-full bg-electric-blue/15 border border-electric-blue/30 text-electric-blue group-hover:bg-electric-blue group-hover:text-black group-hover:shadow-[0_0_10px_#00E5FF] transition-all"
+            animate={{ y: [0, 3, 0] }}
+            transition={{ repeat: Infinity, duration: 1.4, ease: "easeInOut" }}
+          >
+            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
+            </svg>
+          </motion.div>
         </div>
       </motion.div>
     </div>
