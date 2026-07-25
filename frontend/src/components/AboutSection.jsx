@@ -82,58 +82,58 @@ const AboutSection = () => {
               </p>
             </div>
 
-            {/* Interactive 2x2 Core Proficiencies Card Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
+            {/* Interactive 2x2 Core Proficiencies Card Grid (Always 2x2 on Mobile & Desktop!) */}
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 mt-8">
               
               {/* Card 1: MERN Architecture */}
-              <div className="p-4 rounded-2xl glass bg-midnight-blue/40 border border-white/10 hover:border-electric-blue/60 hover:bg-white/5 transition-all duration-300 group flex items-start gap-3.5 shadow-sm">
-                <div className="p-2.5 rounded-xl bg-electric-blue/10 text-electric-blue border border-electric-blue/20 group-hover:scale-110 group-hover:bg-electric-blue group-hover:text-black transition-all duration-300">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="p-3.5 sm:p-4 rounded-2xl glass bg-midnight-blue/40 border border-white/10 hover:border-electric-blue/60 hover:bg-white/5 transition-all duration-300 group flex flex-col sm:flex-row items-start gap-2.5 sm:gap-3.5 shadow-sm">
+                <div className="p-2 sm:p-2.5 rounded-xl bg-electric-blue/10 text-electric-blue border border-electric-blue/20 group-hover:scale-110 group-hover:bg-electric-blue group-hover:text-black transition-all duration-300 shrink-0">
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
                   </svg>
                 </div>
                 <div>
-                  <h4 className="text-base font-outfit font-bold text-white group-hover:text-electric-blue transition-colors">MERN Stack Mastery</h4>
-                  <p className="text-xs text-gray-400 mt-0.5 leading-normal">Full-stack SPAs & scalable RESTful APIs</p>
+                  <h4 className="text-xs sm:text-base font-outfit font-bold text-white group-hover:text-electric-blue transition-colors leading-tight sm:leading-normal">MERN Stack Mastery</h4>
+                  <p className="text-[10px] sm:text-xs text-gray-400 mt-0.5 sm:mt-1 leading-relaxed sm:leading-normal">Full-stack SPAs & scalable RESTful APIs</p>
                 </div>
               </div>
 
               {/* Card 2: AI / ML Exploration */}
-              <div className="p-4 rounded-2xl glass bg-midnight-blue/40 border border-white/10 hover:border-neon-purple/60 hover:bg-white/5 transition-all duration-300 group flex items-start gap-3.5 shadow-sm">
-                <div className="p-2.5 rounded-xl bg-neon-purple/10 text-neon-purple border border-neon-purple/20 group-hover:scale-110 group-hover:bg-neon-purple group-hover:text-white transition-all duration-300">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="p-3.5 sm:p-4 rounded-2xl glass bg-midnight-blue/40 border border-white/10 hover:border-neon-purple/60 hover:bg-white/5 transition-all duration-300 group flex flex-col sm:flex-row items-start gap-2.5 sm:gap-3.5 shadow-sm">
+                <div className="p-2 sm:p-2.5 rounded-xl bg-neon-purple/10 text-neon-purple border border-neon-purple/20 group-hover:scale-110 group-hover:bg-neon-purple group-hover:text-white transition-all duration-300 shrink-0">
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                   </svg>
                 </div>
                 <div>
-                  <h4 className="text-base font-outfit font-bold text-white group-hover:text-neon-purple transition-colors">AI & Neural Systems</h4>
-                  <p className="text-xs text-gray-400 mt-0.5 leading-normal">Exploring machine learning & smart models</p>
+                  <h4 className="text-xs sm:text-base font-outfit font-bold text-white group-hover:text-neon-purple transition-colors leading-tight sm:leading-normal">AI & Neural Systems</h4>
+                  <p className="text-[10px] sm:text-xs text-gray-400 mt-0.5 sm:mt-1 leading-relaxed sm:leading-normal">Exploring machine learning & smart models</p>
                 </div>
               </div>
 
-              {/* Card 3: Agile & Scalable */}
-              <div className="p-4 rounded-2xl glass bg-midnight-blue/40 border border-white/10 hover:border-cyan-400/60 hover:bg-white/5 transition-all duration-300 group flex items-start gap-3.5 shadow-sm">
-                <div className="p-2.5 rounded-xl bg-cyan-400/10 text-cyan-400 border border-cyan-400/20 group-hover:scale-110 group-hover:bg-cyan-400 group-hover:text-black transition-all duration-300">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+              {/* Card 3: Database & Cloud Systems (Vibrant Golden Amber Palette!) */}
+              <div className="p-3.5 sm:p-4 rounded-2xl glass bg-midnight-blue/40 border border-white/10 hover:border-amber-400/60 hover:bg-white/5 transition-all duration-300 group flex flex-col sm:flex-row items-start gap-2.5 sm:gap-3.5 shadow-sm">
+                <div className="p-2 sm:p-2.5 rounded-xl bg-amber-400/10 text-amber-400 border border-amber-400/20 group-hover:scale-110 group-hover:bg-amber-400 group-hover:text-black transition-all duration-300 shrink-0">
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
                   </svg>
                 </div>
                 <div>
-                  <h4 className="text-base font-outfit font-bold text-white group-hover:text-cyan-300 transition-colors">Agile & Scalable</h4>
-                  <p className="text-xs text-gray-400 mt-0.5 leading-normal">Clean architecture & modular performance</p>
+                  <h4 className="text-xs sm:text-base font-outfit font-bold text-white group-hover:text-amber-300 transition-colors leading-tight sm:leading-normal">Database & Cloud Systems</h4>
+                  <p className="text-[10px] sm:text-xs text-gray-400 mt-0.5 sm:mt-1 leading-relaxed sm:leading-normal">Robust MongoDB schemas & cloud deployment</p>
                 </div>
               </div>
 
               {/* Card 4: Career Ready */}
-              <div className="p-4 rounded-2xl glass bg-midnight-blue/40 border border-white/10 hover:border-emerald-400/60 hover:bg-white/5 transition-all duration-300 group flex items-start gap-3.5 shadow-sm">
-                <div className="p-2.5 rounded-xl bg-emerald-400/10 text-emerald-400 border border-emerald-400/20 group-hover:scale-110 group-hover:bg-emerald-400 group-hover:text-black transition-all duration-300">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="p-3.5 sm:p-4 rounded-2xl glass bg-midnight-blue/40 border border-white/10 hover:border-emerald-400/60 hover:bg-white/5 transition-all duration-300 group flex flex-col sm:flex-row items-start gap-2.5 sm:gap-3.5 shadow-sm">
+                <div className="p-2 sm:p-2.5 rounded-xl bg-emerald-400/10 text-emerald-400 border border-emerald-400/20 group-hover:scale-110 group-hover:bg-emerald-400 group-hover:text-black transition-all duration-300 shrink-0">
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
                 </div>
                 <div>
-                  <h4 className="text-base font-outfit font-bold text-white group-hover:text-emerald-300 transition-colors">Career & Impact Ready</h4>
-                  <p className="text-xs text-gray-400 mt-0.5 leading-normal">Eager for impactful full-stack roles</p>
+                  <h4 className="text-xs sm:text-base font-outfit font-bold text-white group-hover:text-emerald-300 transition-colors leading-tight sm:leading-normal">Career & Impact Ready</h4>
+                  <p className="text-[10px] sm:text-xs text-gray-400 mt-0.5 sm:mt-1 leading-relaxed sm:leading-normal">Eager for impactful full-stack roles</p>
                 </div>
               </div>
 

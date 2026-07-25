@@ -229,8 +229,8 @@ const ContactSection = () => {
             transition={{ duration: 0.8 }}
             className="flex flex-col gap-8"
           >
-            {/* 2x2 Info Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
+            {/* 2x2 Info Grid (Always 2x2 on both Mobile Phones and Desktops!) */}
+            <div className="grid grid-cols-2 gap-3.5 sm:gap-6">
               {infoCards.map((card, idx) => (
                 <Tilt 
                   key={idx}
@@ -238,17 +238,18 @@ const ContactSection = () => {
                   tiltMaxAngleY={4} 
                   scale={1.02} 
                   transitionSpeed={2000} 
+                  className="h-full"
                 >
-                  <div className="glass-card bg-[#080e1d]/90 backdrop-blur-2xl p-6 rounded-3xl border border-white/10 hover:border-[#00E5FF]/60 transition-all duration-500 flex flex-col justify-between items-start gap-5 shadow-xl hover:shadow-[0_15px_40px_rgba(0,0,0,0.85),_0_0_25px_rgba(0,229,255,0.2)] transform hover:-translate-y-1.5 group/card h-full">
+                  <div className="glass-card bg-[#080e1d]/90 backdrop-blur-2xl p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-white/10 hover:border-[#00E5FF]/60 transition-all duration-500 flex flex-col justify-between items-start gap-4 sm:gap-5 shadow-xl hover:shadow-[0_15px_40px_rgba(0,0,0,0.85),_0_0_25px_rgba(0,229,255,0.2)] transform hover:-translate-y-1.5 group/card h-full">
                     
                     {/* Glowing Icon Pedestal */}
-                    <div className={cn("w-14 h-14 rounded-2xl flex items-center justify-center text-2xl text-white bg-gradient-to-br transform transition-transform duration-500 group-hover/card:scale-110 group-hover/card:rotate-6", card.gradient, card.shadow)}>
+                    <div className={cn("w-11 h-11 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl flex items-center justify-center text-lg sm:text-2xl text-white bg-gradient-to-br transform transition-transform duration-500 group-hover/card:scale-110 group-hover/card:rotate-6 shrink-0", card.gradient, card.shadow)}>
                       <span>{card.icon}</span>
                     </div>
                     
                     <div className="w-full">
-                      <p className="text-xs text-gray-400 font-extrabold uppercase tracking-widest mb-1">{card.title}</p>
-                      <p className="text-sm sm:text-base text-white font-bold break-all leading-snug group-hover/card:text-cyan-300 transition-colors duration-300">{card.value}</p>
+                      <p className="text-[10px] sm:text-xs text-gray-400 font-extrabold uppercase tracking-wider sm:tracking-widest mb-1">{card.title}</p>
+                      <p className="text-xs sm:text-base text-white font-bold break-all sm:break-normal leading-snug group-hover/card:text-cyan-300 transition-colors duration-300">{card.value}</p>
                     </div>
 
                   </div>

@@ -12,7 +12,7 @@ const projects = [
     image: '/taskora.png',
     description: 'The all-in-one platform to manage your tasks, notes, and daily workflow seamlessly. Features a modern, intuitive interface with secure user authentication.',
     technologies: ['React', 'Node.js', 'Express', 'MongoDB'],
-    githubUrl: '#',
+    githubUrl: 'https://github.com/Truptiparmar26/taskora.git',
     liveUrl: '#',
   },
   {
@@ -22,7 +22,7 @@ const projects = [
     image: '/placehub.jpg',
     description: 'A unified ecosystem empowering students, companies, and placement cells to connect, collaborate, and cultivate future success stories.',
     technologies: ['React', 'Node.js', 'Express', 'MongoDB'],
-    githubUrl: '#',
+    githubUrl: 'https://github.com/Truptiparmar26/placement_portal.git',
     liveUrl: '#',
   },
   {
@@ -32,7 +32,7 @@ const projects = [
     image: '/oncodetect.png',
     description: 'Advanced AI Breast Cancer Prediction. Leveraging Machine Learning algorithms to assist in early diagnosis with fast, accurate, and secure cell analysis.',
     technologies: ['Python', 'Machine Learning', 'Scikit-Learn'],
-    githubUrl: '#',
+    githubUrl: 'https://github.com/Truptiparmar26/breast_cancer.git',
     liveUrl: '#',
   },
   {
@@ -42,7 +42,7 @@ const projects = [
     image: '/omshanti.png',   
     description: 'A premium car rental platform for city tours, airport transfers, and outstation trips. Built with a modern UI and a seamless booking experience.',
     technologies: ['PHP', 'Laravel', 'MySQL', 'Git'],
-    githubUrl: '#',
+    githubUrl: null,
     liveUrl: 'https://car-rental-website-1-mnnp.onrender.com/',
   }
 ];
@@ -161,30 +161,34 @@ const ProjectsSection = () => {
                         ))}
                       </div>
                       
-                      {/* Professional Side-by-Side Action Buttons Console */}
-                      <div className="grid grid-cols-2 gap-3.5 mt-auto pt-5 border-t border-white/10">
+                      {/* Professional Action Buttons Console */}
+                      <div className={`grid ${project.githubUrl ? 'grid-cols-2' : 'grid-cols-1'} gap-3.5 mt-auto pt-5 border-t border-white/10`}>
                         
-                        {/* Source Code Button */}
-                        <a 
-                          href={project.githubUrl || '#'} 
-                          target="_blank" 
-                          rel="noreferrer" 
-                          className="group/btn flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-[#121626] hover:bg-[#1a2035] text-gray-200 hover:text-white font-bold text-xs sm:text-sm border border-white/15 hover:border-cyan-400/50 transition-all duration-300 shadow-[0_4px_15px_rgba(0,0,0,0.4)] hover:shadow-[0_0_20px_rgba(0,229,255,0.25)] transform hover:-translate-y-0.5 cursor-pointer"
-                        >
-                          <FiGithub className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 group-hover/btn:text-electric-blue group-hover/btn:scale-110 transition-all duration-300" />
-                          <span>Source Code</span>
-                        </a>
+                        {/* Source Code Button (Hidden if githubUrl is null/empty) */}
+                        {project.githubUrl && (
+                          <a 
+                            href={project.githubUrl} 
+                            target="_blank" 
+                            rel="noreferrer" 
+                            className="group/btn flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-[#121626] hover:bg-[#1a2035] text-gray-200 hover:text-white font-bold text-xs sm:text-sm border border-white/15 hover:border-cyan-400/50 transition-all duration-300 shadow-[0_4px_15px_rgba(0,0,0,0.4)] hover:shadow-[0_0_20px_rgba(0,229,255,0.25)] transform hover:-translate-y-0.5 cursor-pointer w-full"
+                          >
+                            <FiGithub className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400 group-hover/btn:text-electric-blue group-hover/btn:scale-110 transition-all duration-300" />
+                            <span>Source Code</span>
+                          </a>
+                        )}
 
                         {/* Live Demo Button */}
-                        <a 
-                          href={project.liveUrl || '#'} 
-                          target="_blank" 
-                          rel="noreferrer" 
-                          className="group/demo flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-gradient-to-r from-electric-blue via-indigo-600 to-neon-purple hover:from-cyan-400 hover:to-fuchsia-600 text-white font-extrabold text-xs sm:text-sm border border-[#00E5FF]/40 transition-all duration-300 shadow-[0_0_20px_rgba(0,229,255,0.35)] hover:shadow-[0_0_30px_rgba(0,229,255,0.6)] transform hover:-translate-y-0.5 cursor-pointer"
-                        >
-                          <span>Live Demo</span>
-                          <FiExternalLink className="w-4 h-4 sm:w-5 sm:h-5 text-white group-hover/demo:translate-x-0.5 group-hover/demo:-translate-y-0.5 transition-transform duration-300" />
-                        </a>
+                        {project.liveUrl && (
+                          <a 
+                            href={project.liveUrl} 
+                            target="_blank" 
+                            rel="noreferrer" 
+                            className="group/demo flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-gradient-to-r from-electric-blue via-indigo-600 to-neon-purple hover:from-cyan-400 hover:to-fuchsia-600 text-white font-extrabold text-xs sm:text-sm border border-[#00E5FF]/40 transition-all duration-300 shadow-[0_0_20px_rgba(0,229,255,0.35)] hover:shadow-[0_0_30px_rgba(0,229,255,0.6)] transform hover:-translate-y-0.5 cursor-pointer w-full"
+                          >
+                            <span>Live Demo</span>
+                            <FiExternalLink className="w-4 h-4 sm:w-5 sm:h-5 text-white group-hover/demo:translate-x-0.5 group-hover/demo:-translate-y-0.5 transition-transform duration-300" />
+                          </a>
+                        )}
 
                       </div>
                     </div>

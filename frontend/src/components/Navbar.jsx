@@ -91,7 +91,6 @@ const Navbar = () => {
           >
             <span>Trupti</span>
             <span className="bg-gradient-to-r from-[#00E5FF] to-[#B921FF] bg-clip-text text-transparent ml-0.5 opacity-95 group-hover:opacity-100 group-hover:scale-105 transition-all duration-300 font-black">.dev</span>
-            <span className="ml-2 w-2.5 h-2.5 rounded-full bg-electric-blue shadow-[0_0_12px_#00E5FF] group-hover:animate-ping inline-block"></span>
           </a>
 
           {/* 2. Center: Image 2 Style Title Case Dark Navigation Capsule */}
@@ -115,27 +114,28 @@ const Navbar = () => {
             })}
           </nav>
 
-          {/* 3. Right Side: Signature Resume & Hire Me Action Buttons (Like Image 2!) */}
-          <div className="hidden sm:flex items-center gap-3 shrink-0">
-            {/* Resume Pill Button */}
+          {/* 3. Right Side: Signature Resume & Hire Me Executive Action Buttons */}
+          <div className="hidden sm:flex items-center gap-3.5 shrink-0">
+            {/* Professional Executive Resume Capsule */}
             <a 
               href="/resume.pdf" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="hidden lg:flex items-center gap-2 px-4 py-2 rounded-full bg-[#161224] border border-purple-500/35 text-purple-200 text-xs sm:text-sm font-semibold hover:bg-[#221a36] hover:border-purple-400 transition-all duration-300 shadow-[0_0_15px_rgba(168,85,247,0.15)] cursor-pointer"
+              className="group/res hidden lg:flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-[#0d1322]/90 hover:bg-[#151c33] text-gray-200 hover:text-white font-extrabold text-xs sm:text-sm tracking-wide border border-cyan-500/35 hover:border-[#00E5FF] shadow-[0_4px_20px_rgba(0,0,0,0.5),_0_0_15px_rgba(0,229,255,0.15)] hover:shadow-[0_0_25px_rgba(0,229,255,0.45)] transform hover:-translate-y-0.5 transition-all duration-300 cursor-pointer"
             >
-              <FiFileText className="text-purple-400 w-4 h-4" />
+              <FiFileText className="w-4 h-4 text-[#00E5FF] group-hover/res:scale-110 group-hover/res:-rotate-12 transition-transform duration-300 shrink-0 shadow-[0_0_8px_#00E5FF]" />
               <span>Resume</span>
             </a>
 
-            {/* Hire Me Gradient Pill Button */}
+            {/* Luminous Cyber-Luxury Hire Me Button */}
             <a 
               href="#contact" 
               onClick={(e) => handleNavClick(e, '#contact', 'contact')} 
-              className="flex items-center gap-2 px-5 py-2 rounded-full bg-gradient-to-r from-electric-blue via-indigo-500 to-neon-purple text-white text-xs sm:text-sm font-bold hover:scale-105 transition-all duration-300 shadow-[0_0_20px_rgba(0,229,255,0.4)] cursor-pointer"
+              className="group/hire flex items-center gap-2.5 px-6 py-2.5 rounded-full bg-gradient-to-r from-[#00E5FF] via-[#3B82F6] to-[#8B5CF6] hover:from-[#00FFFF] hover:to-[#B921FF] text-white font-black text-xs sm:text-sm tracking-wider uppercase border border-white/40 shadow-[0_0_25px_rgba(0,229,255,0.6),_0_0_40px_rgba(185,33,255,0.4)] hover:shadow-[0_0_35px_rgba(0,229,255,0.9),_0_0_50px_rgba(185,33,255,0.8)] transform hover:-translate-y-0.5 hover:scale-105 transition-all duration-300 relative overflow-hidden cursor-pointer"
             >
-              <HiSparkles className="w-4 h-4 text-white animate-spin" style={{ animationDuration: '6s' }} />
-              <span>Hire Me</span>
+              <HiSparkles className="w-4 h-4 sm:w-5 sm:h-5 text-white animate-[spin_4s_linear_infinite] drop-shadow-[0_0_8px_#ffffff] shrink-0" />
+              <span className="relative z-10">Hire Me</span>
+              <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent transform -translate-x-full group-hover/hire:translate-x-full transition-transform duration-700 pointer-events-none" />
             </a>
           </div>
 
@@ -184,17 +184,17 @@ const Navbar = () => {
                   href="/resume.pdf" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="flex-1 py-2.5 rounded-xl bg-[#161224] border border-purple-500/35 text-purple-200 text-xs font-semibold flex items-center justify-center gap-2"
+                  className="flex-1 py-3 rounded-2xl bg-[#0d1322] border border-cyan-500/35 hover:border-[#00E5FF] text-white text-xs font-extrabold tracking-wider flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(0,229,255,0.2)]"
                 >
-                  <FiFileText className="text-purple-400 w-4 h-4" />
+                  <FiFileText className="text-[#00E5FF] w-4 h-4" />
                   <span>Resume</span>
                 </a>
                 <a 
                   href="#contact" 
                   onClick={(e) => handleNavClick(e, '#contact', 'contact')}
-                  className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-electric-blue to-neon-purple text-white text-xs font-bold flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(0,229,255,0.4)]"
+                  className="flex-1 py-3 rounded-2xl bg-gradient-to-r from-[#00E5FF] via-[#3B82F6] to-[#8B5CF6] text-white text-xs font-black tracking-wider uppercase flex items-center justify-center gap-2 shadow-[0_0_25px_rgba(0,229,255,0.5)]"
                 >
-                  <HiSparkles className="w-4 h-4 text-white" />
+                  <HiSparkles className="w-4 h-4 text-white animate-[spin_4s_linear_infinite]" />
                   <span>Hire Me</span>
                 </a>
               </div>
