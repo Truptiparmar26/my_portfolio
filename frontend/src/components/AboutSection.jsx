@@ -1,34 +1,6 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Float, MeshDistortMaterial } from '@react-three/drei';
-
-const AbstractShape = () => {
-  const mesh = useRef();
-  
-  useFrame((state) => {
-    if (mesh.current) {
-      mesh.current.rotation.x = state.clock.elapsedTime * 0.2;
-      mesh.current.rotation.y = state.clock.elapsedTime * 0.3;
-    }
-  });
-
-  return (
-    <Float speed={2} rotationIntensity={1} floatIntensity={2}>
-      <mesh ref={mesh}>
-        <icosahedronGeometry args={[1.4, 4]} />
-        <MeshDistortMaterial 
-          color="#00E5FF" 
-          emissive="#B921FF" 
-          emissiveIntensity={0.5}
-          distort={0.4} 
-          speed={2} 
-          wireframe={true}
-        />
-      </mesh>
-    </Float>
-  );
-};
+import profileImage from '../assets/profile-about.jpg';
 
 const AboutSection = () => {
   const { scrollYProgress } = useScroll();
@@ -58,36 +30,24 @@ const AboutSection = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           
-          {/* Left: 3D Element */}
+          {/* Left: Professional Profile Photo */}
           <motion.div 
-            className="relative w-full max-w-lg mx-auto lg:max-w-none h-[350px] lg:h-[450px] rounded-[2.5rem] glass overflow-hidden flex items-center justify-center border border-white/5 group"
+            className="relative w-full max-w-md md:max-w-lg mx-auto lg:max-w-none h-[420px] md:h-[520px] lg:h-[540px] rounded-[2.5rem] glass overflow-hidden flex items-center justify-center border border-white/10 group shadow-[0_0_40px_rgba(185,33,255,0.15)] hover:shadow-[0_0_60px_rgba(0,229,255,0.25)] transition-all duration-700"
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1 }}
             style={{ y }}
           >
-            {/* Internal Glow */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-midnight-blue via-transparent to-midnight-blue opacity-50 z-10 pointer-events-none"></div>
+            {/* Subtle Ambient Glow */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-neon-purple/15 via-transparent to-electric-blue/15 opacity-50 z-10 pointer-events-none group-hover:opacity-75 transition-opacity duration-500"></div>
             
-            <Canvas camera={{ position: [0, 0, 4] }}>
-              <ambientLight intensity={0.5} />
-              <directionalLight position={[2, 2, 2]} intensity={2} color="#00E5FF" />
-              <directionalLight position={[-2, -2, -2]} intensity={2} color="#B921FF" />
-              <AbstractShape />
-            </Canvas>
-            
-            {/* Stats Overlay */}
-            <div className="absolute bottom-6 left-6 right-6 flex justify-between z-20">
-              <div className="glass px-4 py-3 rounded-2xl border border-white/10 flex flex-col items-center">
-                <span className="text-2xl font-bold text-electric-blue">20+</span>
-                <span className="text-[10px] text-gray-400 uppercase tracking-widest">Projects</span>
-              </div>
-              <div className="glass px-4 py-3 rounded-2xl border border-white/10 flex flex-col items-center">
-                <span className="text-2xl font-bold text-neon-purple">500+</span>
-                <span className="text-[10px] text-gray-400 uppercase tracking-widest">Hours Coding</span>
-              </div>
-            </div>
+            {/* Profile Photo aligned from top so hair/head is never cropped */}
+            <img 
+              src={profileImage} 
+              alt="Trupti Parmar" 
+              className="w-full h-full object-cover object-top transform group-hover:scale-103 transition-transform duration-700 ease-out"
+            />
           </motion.div>
 
           {/* Right: Content details */}

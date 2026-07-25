@@ -44,7 +44,7 @@ const HeroSection = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            AI Enthusiast &<br />
+            AI /Ml Enthusiast &<br />
             <span className="text-gradient">MERN Stack</span> Dev.
           </motion.h1>
 

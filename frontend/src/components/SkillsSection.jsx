@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Tilt from 'react-parallax-tilt';
 
 const skillCategories = [
-  // { id: 'all', name: 'All Skills' },
   { id: 'frontend', name: 'Frontend' },
   { id: 'backend', name: 'Backend' },
   { id: 'database', name: 'Database' },
@@ -65,11 +64,9 @@ const skills = [
 ];
 
 const SkillsSection = () => {
-  const [activeCategory, setActiveCategory] = useState('all');
+  const [activeCategory, setActiveCategory] = useState('frontend');
 
-  const filteredSkills = activeCategory === 'all' 
-    ? skills 
-    : skills.filter(skill => skill.category === activeCategory);
+  const filteredSkills = skills.filter(skill => skill.category === activeCategory);
 
   return (
     <section className="relative min-h-screen py-24 px-4 flex flex-col items-center justify-center z-10" id="skills">
