@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { FiMenu, FiX, FiFileText } from 'react-icons/fi';
 import { HiSparkles } from 'react-icons/hi';
+import { useCV } from '../context/CVContext';
 
 const navLinks = [
   { name: 'Home', href: '#home', id: 'home' },
@@ -15,6 +16,7 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [isOpen, setIsOpen] = useState(false);
+  const { openCVModal } = useCV();
 
   // Framer Motion GPU-Accelerated Live Scroll Progress Telemetry
   const { scrollYProgress } = useScroll();
@@ -119,9 +121,9 @@ const Navbar = () => {
             {/* Professional Executive Resume Capsule */}
             <a 
               href="/resume.pdf" 
-              target="_blank" 
-              rel="noopener noreferrer" 
+              onClick={openCVModal}
               className="group/res hidden lg:flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-[#0d1322]/90 hover:bg-[#151c33] text-gray-200 hover:text-white font-extrabold text-xs sm:text-sm tracking-wide border border-cyan-500/35 hover:border-[#00E5FF] shadow-[0_4px_20px_rgba(0,0,0,0.5),_0_0_15px_rgba(0,229,255,0.15)] hover:shadow-[0_0_25px_rgba(0,229,255,0.45)] transform hover:-translate-y-0.5 transition-all duration-300 cursor-pointer"
+              title="View CV & Professional Resume"
             >
               <FiFileText className="w-4 h-4 text-[#00E5FF] group-hover/res:scale-110 group-hover/res:-rotate-12 transition-transform duration-300 shrink-0 shadow-[0_0_8px_#00E5FF]" />
               <span>Resume</span>
@@ -182,12 +184,15 @@ const Navbar = () => {
               <div className="w-full flex items-center justify-between gap-3 mt-2 pt-3 border-t border-white/10">
                 <a 
                   href="/resume.pdf" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
+                  onClick={(e) => {
+                    setIsOpen(false);
+                    openCVModal(e);
+                  }}
                   className="flex-1 py-3 rounded-2xl bg-[#0d1322] border border-cyan-500/35 hover:border-[#00E5FF] text-white text-xs font-extrabold tracking-wider flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(0,229,255,0.2)]"
+                  title="View CV & Professional Resume"
                 >
                   <FiFileText className="text-[#00E5FF] w-4 h-4" />
-                  <span>Resume</span>
+                  <span>CV / Resume</span>
                 </a>
                 <a 
                   href="#contact" 

@@ -1,8 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import profileImage from '../assets/profile-about.jpg';
+import { FiEye, FiDownload } from 'react-icons/fi';
+import { useCV } from '../context/CVContext';
 
 const AboutSection = () => {
+  const { openCVModal, handleDownloadCV } = useCV();
   return (
     <section className="relative min-h-screen py-28 px-4 flex flex-col items-center justify-center z-10 overflow-hidden" id="about">
       {/* Background Ambient Decor */}
@@ -137,6 +140,25 @@ const AboutSection = () => {
                 </div>
               </div>
 
+            </div>
+
+            {/* Action Row: View CV Preview & Direct Download */}
+            <div className="flex flex-wrap items-center gap-4 mt-8 pt-6 border-t border-white/10">
+              <button
+                onClick={openCVModal}
+                className="flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-gradient-to-r from-[#00E5FF] via-[#3B82F6] to-[#8B5CF6] hover:from-[#00FFFF] hover:to-[#B921FF] text-white font-extrabold text-xs sm:text-sm tracking-wide shadow-[0_0_25px_rgba(0,229,255,0.4)] hover:shadow-[0_0_40px_rgba(0,229,255,0.7)] transform hover:-translate-y-0.5 transition-all duration-300 cursor-pointer group"
+              >
+                <FiEye className="w-4 h-4 text-white group-hover:scale-110 transition-transform shrink-0" />
+                <span>View CV / Resume</span>
+              </button>
+
+              <button
+                onClick={handleDownloadCV}
+                className="flex items-center gap-2.5 px-6 py-3.5 rounded-full glass bg-[#0d1322]/80 hover:bg-[#151c33] text-gray-200 hover:text-white font-bold text-xs sm:text-sm tracking-wide border border-white/20 hover:border-neon-purple shadow-[0_4px_20px_rgba(0,0,0,0.5)] hover:shadow-[0_0_25px_rgba(185,33,255,0.4)] transform hover:-translate-y-0.5 transition-all duration-300 cursor-pointer group"
+              >
+                <FiDownload className="w-4 h-4 text-neon-purple group-hover:-translate-y-0.5 transition-transform shrink-0" />
+                <span>Download CV (PDF)</span>
+              </button>
             </div>
           </motion.div>
         </div>

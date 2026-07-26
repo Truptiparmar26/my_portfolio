@@ -1,12 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+import { useCV } from '../context/CVContext';
 
 const AnimatedCursor = () => {
   const dotRef = useRef(null);
   const ringRef = useRef(null);
   const [isHovering, setIsHovering] = useState(false);
+  const { isCVModalOpen } = useCV();
 
   useEffect(() => {
+    if (isCVModalOpen) {
+      document.body.style.cursor = 'auto';
+      return;
+    }
+
     // Hide default browser cursor globally on desktop
     document.body.style.cursor = 'none';
     const style = document.createElement('style');
@@ -63,9 +70,9 @@ const AnimatedCursor = () => {
       document.body.style.cursor = 'auto';
       if (style.parentNode) document.head.removeChild(style);
     };
-  }, []);
+  }, [isCVModalOpen]);
 
-  if (typeof window !== 'undefined' && window.innerWidth < 768) return null;
+  if (isCVModalOpen || (typeof window !== 'undefined' && window.innerWidth < 768)) return null;
 
   return (
     <>

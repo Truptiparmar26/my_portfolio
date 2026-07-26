@@ -3,9 +3,11 @@ import { motion } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
 import HeroCanvas from './HeroCanvas';
 import MagneticButton from './MagneticButton';
-import { FiDownload, FiArrowRight, FiGithub } from 'react-icons/fi';
+import { FiDownload, FiArrowRight, FiGithub, FiEye } from 'react-icons/fi';
+import { useCV } from '../context/CVContext';
 
 const HeroSection = () => {
+  const { openCVModal, handleDownloadCV } = useCV();
   // Interactive Mouse & Mobile Scroll / Touch Physics State
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
   const [scrollY, setScrollY] = useState(0);
@@ -140,8 +142,7 @@ const HeroSection = () => {
               />
             </div>
             <p className="text-sm md:text-base text-gray-400 leading-relaxed font-normal">
-              Combining cutting-edge Artificial Intelligence with high-performance MERN stack software engineering to design reactive, resilient, and state-of-the-art web applications.
-            </p>
+Combining Artificial Intelligence, Machine Learning, and MERN Stack development to build intelligent, scalable, and high-performance web applications.            </p>
           </motion.div>
           
           {/* Action Buttons */}
@@ -159,9 +160,22 @@ const HeroSection = () => {
               <FiArrowRight className="group-hover:translate-x-1.5 transition-transform text-lg" />
             </MagneticButton>
             
-            <MagneticButton className="px-7 py-4 rounded-full border border-white/20 glass hover:border-electric-blue text-gray-200 hover:text-white font-semibold text-sm md:text-base tracking-wide shadow-lg hover:shadow-[0_0_25px_rgba(0,229,255,0.2)] transition-all flex items-center gap-3 group">
-              <span>Download Resume</span>
-              <FiDownload className="group-hover:-translate-y-0.5 transition-transform text-electric-blue text-lg" />
+            {/* <MagneticButton 
+              onClick={openCVModal}
+              className="px-6 py-4 rounded-full border border-cyan-400/40 glass bg-cyan-500/10 hover:border-[#00E5FF] hover:bg-cyan-500/20 text-gray-100 hover:text-white font-semibold text-sm md:text-base tracking-wide shadow-lg hover:shadow-[0_0_30px_rgba(0,229,255,0.3)] transition-all flex items-center gap-2.5 group"
+              title="View & Inspect CV / Resume Online"
+            >
+              <FiEye className="group-hover:scale-110 transition-transform text-[#00E5FF] text-lg" />
+              <span>View CV / Resume</span>
+            </MagneticButton> */}
+
+            <MagneticButton 
+              onClick={handleDownloadCV}
+              className="px-6 py-4 rounded-full border border-white/20 glass hover:border-neon-purple text-gray-200 hover:text-white font-semibold text-sm md:text-base tracking-wide shadow-lg hover:shadow-[0_0_25px_rgba(185,33,255,0.35)] transition-all flex items-center gap-2.5 group"
+              title="Directly Download CV (PDF)"
+            >
+              <FiDownload className="group-hover:-translate-y-0.5 transition-transform text-neon-purple text-lg" />
+              <span>Download CV</span>
             </MagneticButton>
 
             <MagneticButton 
